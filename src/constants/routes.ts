@@ -1,0 +1,5 @@
+export enum ROUTES {
+  MAIN = 'MAIN_SCREEN',
+  GAME = 'GAME_SCREEN',
+  LEADER_BOARD = 'LEADER_BOARD_SCREEN',
+}
