@@ -1,4 +1,5 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { rem } from '../../utils/dim';
 
 export interface MainSceenStyle {
   container: ViewStyle;
@@ -22,13 +23,13 @@ export const styles = StyleSheet.create<MainSceenStyle>({
   title: {
     color: '#FFFEFF',
     fontWeight: 'bold',
-    fontSize: 40,
+    fontSize: rem(40),
   },
   buttonsContainer: {
     flex: 4,
     alignItems: 'center',
   },
   buttonSpacing: {
-    marginBottom: 20,
+    marginBottom: rem(20),
   },
 });

@@ -1,4 +1,5 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { rem } from '../../utils/dim';
 
 export interface MenuButtonStyle {
   container: ViewStyle;
@@ -9,17 +10,17 @@ export interface MenuButtonStyle {
 
 export const styles = StyleSheet.create<MenuButtonStyle>({
   container: {
-    borderRadius: 10,
+    borderRadius: rem(10),
   },
   contentWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 50,
-    width: 300,
+    height: rem(50),
+    width: rem(300),
   },
   text: {
     flex: 3,
-    paddingLeft: 40,
+    paddingLeft: rem(40),
     color: '#FFF',
     fontWeight: 'bold',
   },
@@ -28,8 +29,8 @@ export const styles = StyleSheet.create<MenuButtonStyle>({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0,0.15)',
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: rem(10),
+    borderBottomLeftRadius: rem(10),
     height: '100%',
     width: '100%',
   },
