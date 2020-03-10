@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableNativeFeedback } from 'react-native';
+import { View, Text, TouchableNativeFeedback, ViewStyle } from 'react-native';
 
 import { styles } from './styles';
 
@@ -8,13 +8,14 @@ export interface MenuButtonProps {
   onPress: () => void;
   icon?: JSX.Element;
   color?: string;
+  style?: ViewStyle;
 }
 
 const MenuButton = (props: MenuButtonProps) => {
-  const { label, onPress, icon, color } = props;
+  const { label, onPress, icon, color, style } = props;
 
   return (
-    <View style={[styles.container, { backgroundColor: color }]}>
+    <View style={[styles.container, { backgroundColor: color }, style]}>
       <TouchableNativeFeedback
         onPress={onPress}
         background={TouchableNativeFeedback.Ripple('#000', true)}>

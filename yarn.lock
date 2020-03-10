@@ -5381,10 +5381,21 @@ react-native-gesture-handler@^1.6.0:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-gradient@^0.4.9:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/react-native-gradient/-/react-native-gradient-0.4.9.tgz#f1795664b5d31bdce6affa40a43f5ef2067e07cf"
+  integrity sha512-WGn/fYGIekfIJ1D686DMHa8D1PYW+ObxPLLcFAdlW5WRCZf3HtjtF/9VUmAEfRn6jj627JCa7ipsRWepC3aV9A==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+
+react-native-linear-gradient@react-native-community/react-native-linear-gradient:
+  version "2.5.6"
+  resolved "https://codeload.github.com/react-native-community/react-native-linear-gradient/tar.gz/b8268526477aa6acf9061d760135d8b47f2cc05b"
 
 react-native-reanimated@^1.7.0:
   version "1.7.0"
