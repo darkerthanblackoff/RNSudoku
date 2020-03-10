@@ -16,7 +16,11 @@ const Router = () => (
         component={MainScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name={ROUTES.GAME} component={GameScreen} />
+      <Stack.Screen
+        name={ROUTES.GAME}
+        component={GameScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name={ROUTES.LEADER_BOARD} component={LeaderBoardScreen} />
     </Stack.Navigator>
   </NavigationContainer>
