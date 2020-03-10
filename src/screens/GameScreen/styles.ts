@@ -9,6 +9,7 @@ export interface GameSceenStyle {
   contentContainer: ViewStyle;
   numberButtonsContainer: ViewStyle;
   numberButtonsRow: ViewStyle;
+  numberButtons: ViewStyle;
 }
 
 export const styles = StyleSheet.create<GameSceenStyle>({
@@ -39,5 +40,8 @@ export const styles = StyleSheet.create<GameSceenStyle>({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: rem(15),
+  },
+  numberButtons: {
+    marginRight: rem(20),
   },
 });

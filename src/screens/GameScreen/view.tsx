@@ -21,7 +21,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 
   private numberButtonPress(value: number) {
-    alert(value);
+    console.log(value);
   }
 
   public render() {
@@ -36,7 +36,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
             <View style={styles.numberButtonsRow}>
               {this.topNumbers.map(val => (
                 <NumberButton
-                  style={{ marginRight: 20 }}
+                  style={styles.numberButtons}
                   value={val}
                   onPress={this.numberButtonPress}
                 />
@@ -45,7 +45,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
             <View style={styles.numberButtonsRow}>
               {this.bottomNumbers.map(val => (
                 <NumberButton
-                  style={{ marginRight: 20 }}
+                  style={styles.numberButtons}
                   value={val}
                   onPress={this.numberButtonPress}
                 />
