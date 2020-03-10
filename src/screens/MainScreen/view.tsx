@@ -18,7 +18,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
   public render() {
     const { navigation } = this.props;
     return (
-      <LinearGradient style={styles.container} colors={['#6C4E6A', '#995D76']}>
+      <LinearGradient style={styles.container} colors={['#6A4D6B', '#9E5D75']}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>SUDOKU</Text>
         </View>
