@@ -42,7 +42,9 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 
   private numberButtonPress(value: number) {
-    this.props.placeImValue(value);
+    if (this.props.selectedRow && this.props.selectedColumn) {
+      this.props.placeImValue(value);
+    }
   }
 
   public render() {
