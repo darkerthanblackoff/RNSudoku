@@ -21,7 +21,7 @@ export const styles = StyleSheet.create<NumberButtonStyle>({
     width: buttonSize,
   },
   label: {
-    fontSize: 30,
+    fontSize: rem(30),
     color: '#574251',
   },
 });
