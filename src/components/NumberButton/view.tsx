@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableNativeFeedback, ViewStyle } from 'react-native';
+import { View, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { styles } from './styles';
 
 export interface NumberButtonProps {
@@ -13,16 +13,15 @@ export const NumberButton = (props: NumberButtonProps) => {
 
   return (
     <View style={[styles.container, style]}>
-      <TouchableNativeFeedback
+      <TouchableOpacity
         onPress={() => {
           onPress(value);
         }}
-        style={styles.container}
-        background={TouchableNativeFeedback.Ripple('#000', true)}>
+        style={styles.container}>
         <View style={styles.labelContainer}>
           <Text style={styles.label}>{value}</Text>
         </View>
-      </TouchableNativeFeedback>
+      </TouchableOpacity>
     </View>
   );
 };

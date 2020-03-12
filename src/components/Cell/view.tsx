@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 import { styles } from './styles';
 
@@ -35,11 +35,11 @@ const Cell = (props: CellProps) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => onPress(i, j)}>
+    <TouchableOpacity onPress={() => onPress(i, j)}>
       <View style={[styles.container, bordRads, { backgroundColor }]}>
         {label && <Text style={styles.label}>{label}</Text>}
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableNativeFeedback, ViewStyle } from 'react-native';
+import { View, Text, TouchableOpacity, ViewStyle } from 'react-native';
 
 import { styles } from './styles';
 
@@ -16,14 +16,12 @@ const MenuButton = (props: MenuButtonProps) => {
 
   return (
     <View style={[styles.container, { backgroundColor: color }, style]}>
-      <TouchableNativeFeedback
-        onPress={onPress}
-        background={TouchableNativeFeedback.Ripple('#000', true)}>
+      <TouchableOpacity onPress={onPress}>
         <View style={styles.contentWrapper}>
           {icon && <View style={styles.icon}>{icon}</View>}
           <Text style={styles.text}>{label.toUpperCase()}</Text>
         </View>
-      </TouchableNativeFeedback>
+      </TouchableOpacity>
     </View>
   );
 };
