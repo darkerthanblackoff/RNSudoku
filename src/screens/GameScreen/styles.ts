@@ -7,6 +7,10 @@ export interface GameSceenStyle {
   bgBottomRow: ViewStyle;
   container: ViewStyle;
   contentContainer: ViewStyle;
+  topBarContainer: ViewStyle;
+  boardContainer: ViewStyle;
+  boardRow: ViewStyle;
+  board: ViewStyle;
   numberButtonsContainer: ViewStyle;
   numberButtonsRow: ViewStyle;
   numberButtons: ViewStyle;
@@ -32,7 +36,12 @@ export const styles = StyleSheet.create<GameSceenStyle>({
     justifyContent: 'center',
     flex: 1,
   },
+  topBarContainer: {
+    flex: 1,
+    width: '100%',
+  },
   numberButtonsContainer: {
+    flex: 3,
     alignItems: 'center',
     width: '100%',
   },
@@ -42,6 +51,18 @@ export const styles = StyleSheet.create<GameSceenStyle>({
     marginVertical: rem(15),
   },
   numberButtons: {
-    marginRight: rem(20),
+    marginHorizontal: rem(10),
+  },
+  boardContainer: {
+    flex: 7,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  boardRow: {
+    flexDirection: 'row',
+  },
+  board: {
+    borderRadius: rem(10),
   },
 });
