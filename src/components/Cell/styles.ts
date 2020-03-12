@@ -4,6 +4,7 @@ import { rem } from '../../utils/dim';
 export interface CellStyle {
   container: ViewStyle;
   selected: ViewStyle;
+  visible: ViewStyle;
   label: TextStyle;
 }
 
@@ -20,6 +21,9 @@ export const styles = StyleSheet.create<CellStyle>({
     borderWidth: 1,
   },
   selected: {},
+  visible: {
+    backgroundColor: '#B4B9BC',
+  },
   label: {
     fontSize: rem(25),
     color: '#574251',

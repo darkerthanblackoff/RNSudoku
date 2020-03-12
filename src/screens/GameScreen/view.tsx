@@ -69,6 +69,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
                         label={
                           el.isVisible() ? el.getReValue() : el.getImValue()
                         }
+                        visible={el.isVisible()}
                         i={rIndex}
                         j={cIndex}
                         selected={
