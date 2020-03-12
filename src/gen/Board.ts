@@ -59,6 +59,21 @@ class Board {
     return this;
   }
 
+  public filter(
+    cbFn: (cell: BoardCell, rowIndex?: number, columnIndex?: number) => boolean,
+  ): Array<BoardCell> | undefined {
+    let result: Array<BoardCell> = [];
+
+    this._board.forEach((row, rIndex) => {
+      const filtered = row.filter((cell, cIndex) => cbFn(cell, rIndex, cIndex));
+      if (filtered) {
+        result.concat(filtered);
+      }
+    });
+
+    return result.length > 0 ? result : undefined;
+  }
+
   public getBoard() {
     return [...this._board];
   }
