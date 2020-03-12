@@ -130,11 +130,11 @@ class StupidSudokuGenerator {
     let cellsToHide = 0;
 
     if (difficulty === 'EASY') {
-      cellsToHide = 46;
+      cellsToHide = 20;
     } else if (difficulty === 'MEDIUM') {
-      cellsToHide = 53;
+      cellsToHide = 36;
     } else {
-      cellsToHide = 61;
+      cellsToHide = 54;
     }
 
     while (cellsToHide > 0) {
