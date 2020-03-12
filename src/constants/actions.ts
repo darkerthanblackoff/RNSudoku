@@ -1,0 +1,10 @@
+export enum GAME_ACTIONS {
+  INIT = 'INIT',
+  SELECT_CELL = 'SELECT_CELL',
+  UPDATE_BOARD = 'UPDATE_BOARD',
+  PLACE_IM_VAL = 'PLACE_IM_VAL',
+}
+
+export const ACTIONS = {
+  GAME: GAME_ACTIONS,
+};
