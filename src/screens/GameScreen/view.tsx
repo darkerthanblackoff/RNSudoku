@@ -42,7 +42,6 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
     super(props);
 
     this.numberButtonPress = this.numberButtonPress.bind(this);
-    this.props.init();
   }
 
   public componentDidMount() {

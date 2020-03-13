@@ -10,7 +10,7 @@ import SwitchSelector, {
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { StoreState } from '../../interfaces';
-import { setDifficulty } from '../../redux/actions';
+import { setDifficulty, createNewGame } from '../../redux/actions';
 
 import { ROUTES, DIFFICULTY } from '../../constants';
 
@@ -24,6 +24,7 @@ interface MainScreenProps extends NavigationStackScreenProps {
   difficulty: Difficulty;
   name: string;
   setDifficulty: (diff: Difficulty) => void;
+  createNewGame: (diff: Difficulty) => void;
 }
 
 interface MainScreenState {}
@@ -74,6 +75,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             style={styles.buttonSpacing}
             label="Start Game"
             onPress={() => {
+              this.props.createNewGame(difficulty);
               navigation.navigate(ROUTES.GAME);
             }}
             color="#EC4F64"
@@ -105,6 +107,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       setDifficulty,
+      createNewGame,
     },
     dispatch,
   );

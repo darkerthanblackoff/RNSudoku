@@ -1,5 +1,10 @@
 import { ACTIONS } from '../../constants';
 
+export const createNewGame = (difficulty: 'EASY' | 'MEDIUM' | 'HARD') => ({
+  type: ACTIONS.GAME.NEW,
+  payload: difficulty,
+});
+
 export const init = () => ({
   type: ACTIONS.GAME.INIT,
 });

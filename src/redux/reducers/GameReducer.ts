@@ -15,6 +15,14 @@ const GameReducer = (
   action: { type: string; payload: any },
 ): GameState => {
   switch (action.type) {
+    case ACTIONS.GAME.NEW:
+      return {
+        ...state,
+        board: new StupidSudokuGenerator()
+          .generate(action.payload)
+          .getBoard()
+          .toArray(),
+      };
     case ACTIONS.GAME.INIT:
       return {
         ...state,

@@ -1,6 +1,8 @@
 import { REDUCERS } from './reducers';
 
 export enum GAME_ACTIONS {
+  NEW = 'NEW',
+
   INIT = 'INIT',
   SELECT_CELL = 'SELECT_CELL',
   UPDATE_BOARD = 'UPDATE_BOARD',
