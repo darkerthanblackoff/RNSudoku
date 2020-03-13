@@ -3,26 +3,73 @@ import React, { PureComponent } from 'react';
 import { View, Text } from 'react-native';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 import LinearGradient from 'react-native-linear-gradient';
+import SwitchSelector, {
+  ISwitchSelectorOption,
+} from 'react-native-switch-selector';
 
-import { ROUTES } from '../../constants';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { StoreState } from '../../interfaces';
+import { setDifficulty } from '../../redux/actions';
+
+import { ROUTES, DIFFICULTY } from '../../constants';
 
 import { MenuButton } from '../../components';
 import { Play, Options, LeaderBoard } from '../../assets/svg';
 import { styles } from './styles';
 
-interface MainScreenProps extends NavigationStackScreenProps {}
+type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
+
+interface MainScreenProps extends NavigationStackScreenProps {
+  difficulty: Difficulty;
+  name: string;
+  setDifficulty: (diff: Difficulty) => void;
+}
 
 interface MainScreenState {}
 
+const switchOptions: ISwitchSelectorOption[] = [
+  {
+    label: DIFFICULTY.EASY,
+    value: DIFFICULTY.EASY,
+  },
+  {
+    label: DIFFICULTY.MEDIUM,
+    value: DIFFICULTY.MEDIUM,
+  },
+  {
+    label: DIFFICULTY.HARD,
+    value: DIFFICULTY.HARD,
+  },
+];
+
+const mapDifficultyToNum = (difficulty: Difficulty): number => {
+  if (difficulty === 'EASY') {
+    return 0;
+  } else if (difficulty === 'MEDIUM') {
+    return 1;
+  } else {
+    return 0;
+  }
+};
+
 class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
   public render() {
-    const { navigation } = this.props;
+    const { navigation, difficulty } = this.props;
     return (
       <LinearGradient style={styles.container} colors={['#6A4D6B', '#9E5D75']}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>SUDOKU</Text>
         </View>
         <View style={styles.buttonsContainer}>
+          <SwitchSelector
+            style={{ ...styles.switch, ...styles.buttonSpacing }}
+            buttonColor="#7953CF"
+            options={switchOptions}
+            initial={0}
+            value={mapDifficultyToNum(difficulty)}
+            onPress={val => this.props.setDifficulty(val as Difficulty)}
+          />
           <MenuButton
             style={styles.buttonSpacing}
             label="Start Game"
@@ -52,4 +99,17 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
   }
 }
 
-export default MainScreen;
+const mapStateToProps = (STORE: StoreState) => ({ ...STORE.SETTINGS });
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(
+    {
+      setDifficulty,
+    },
+    dispatch,
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MainScreen);

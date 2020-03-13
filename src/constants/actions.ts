@@ -1,3 +1,5 @@
+import { REDUCERS } from './reducers';
+
 export enum GAME_ACTIONS {
   INIT = 'INIT',
   SELECT_CELL = 'SELECT_CELL',
@@ -10,6 +12,13 @@ export enum GAME_ACTIONS {
   TIMER_RESET = 'TIMER_RESET',
 }
 
+export enum SETTINGS_ACTIONS {
+  SET_DIFFICULTY = 'SET_DIFFICULTY',
+  SET_NAME = 'SET_NAME',
+  CLEAR_NAME = 'CLEAR_NAME',
+}
+
 export const ACTIONS = {
-  GAME: GAME_ACTIONS,
+  [REDUCERS.GAME]: GAME_ACTIONS,
+  [REDUCERS.SETTINGS]: SETTINGS_ACTIONS,
 };

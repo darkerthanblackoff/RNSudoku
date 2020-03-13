@@ -5465,6 +5465,11 @@ react-native-svg@^12.0.3:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
 
+react-native-switch-selector@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-switch-selector/-/react-native-switch-selector-2.0.3.tgz#7ef296afe0988fd5baa38305bd78c4fcdc20bd72"
+  integrity sha512-p/c8+VBo06po+y6dHZdSBZOe5HulkFI3ltT99s7/byT9hPKT9M9fYFuUYm6SCH9lyPR0o8bZBO3Jewa0ahra2A==
+
 react-native@0.61.5:
   version "0.61.5"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.61.5.tgz#6e21acb56cbd75a3baeb1f70201a66f42600bba8"

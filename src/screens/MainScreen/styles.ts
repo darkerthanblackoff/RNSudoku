@@ -7,6 +7,7 @@ export interface MainSceenStyle {
   title: TextStyle;
   buttonsContainer: ViewStyle;
   buttonSpacing: ViewStyle;
+  switch: ViewStyle;
 }
 
 export const styles = StyleSheet.create<MainSceenStyle>({
@@ -31,5 +32,8 @@ export const styles = StyleSheet.create<MainSceenStyle>({
   },
   buttonSpacing: {
     marginBottom: rem(20),
+  },
+  switch: {
+    width: rem(300),
   },
 });

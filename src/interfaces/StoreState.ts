@@ -9,6 +9,12 @@ export interface GameState {
   timerResets: boolean;
 }
 
+export interface SettingsState {
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  name: string;
+}
+
 export interface StoreState {
   [REDUCERS.GAME]: GameState;
+  [REDUCERS.SETTINGS]: SettingsState;
 }
