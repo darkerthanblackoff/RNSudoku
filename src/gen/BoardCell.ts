@@ -13,6 +13,10 @@ class BoardCell {
     return this.visible;
   }
 
+  public isCorrect() {
+    return this.visible ? true : this.imVal === null ? true : false;
+  }
+
   public setVisability(val: boolean) {
     this.visible = val;
   }
@@ -28,8 +32,6 @@ class BoardCell {
   public getImValue() {
     return this.imVal;
   }
-
-  [key: number]: BoardCell;
 }
 
 export default BoardCell;

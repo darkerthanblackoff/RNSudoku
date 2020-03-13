@@ -26,7 +26,7 @@ interface GameScreenProps extends NavigationStackScreenProps {
   timerTicks: boolean;
   timerValue: number;
   timerResets: boolean;
-  difficulty: string;
+  currentDifficulty: string;
   init: () => void;
   selectCell: (i: number, j: number) => void;
   updateBoard: () => void;
@@ -72,7 +72,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
       selectedColumn,
       timerTicks,
       timerValue,
-      difficulty,
+      currentDifficulty,
     } = this.props;
 
     return (
@@ -91,7 +91,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
                 getMsecs={this.getTimerValue}
                 textStyle={styles.stopwatchText}
               />
-              <Text style={styles.difficultyText}>{difficulty}</Text>
+              <Text style={styles.difficultyText}>{currentDifficulty}</Text>
             </View>
             <View style={styles.board}>
               {board &&
@@ -147,15 +147,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 }
 
-const mapStateToProps = (STORE: StoreState) => {
-  const { GAME, SETTINGS } = STORE;
-
-  return {
-    ...GAME,
-    difficulty: SETTINGS.difficulty,
-  };
-};
-
+const mapStateToProps = (STORE: StoreState) => ({ ...STORE.GAME });
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {

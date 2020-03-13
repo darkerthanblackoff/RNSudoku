@@ -20,6 +20,7 @@ const GameReducer = (
       return {
         ...state,
         timerValue: 0,
+        currentDifficulty: action.payload,
         board: new StupidSudokuGenerator()
           .generate(action.payload)
           .getBoard()

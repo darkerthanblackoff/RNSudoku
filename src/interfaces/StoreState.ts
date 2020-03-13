@@ -8,6 +8,7 @@ export interface GameState {
   timerTicks: boolean;
   timerValue: number;
   timerResets: boolean;
+  currentDifficulty: 'EASY' | 'MEDIUM' | 'HARD';
 }
 
 export interface SettingsState {
