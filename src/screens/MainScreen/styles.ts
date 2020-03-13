@@ -8,6 +8,7 @@ export interface MainSceenStyle {
   buttonsContainer: ViewStyle;
   buttonSpacing: ViewStyle;
   switch: ViewStyle;
+  nameInput: ViewStyle;
 }
 
 export const styles = StyleSheet.create<MainSceenStyle>({
@@ -35,5 +36,11 @@ export const styles = StyleSheet.create<MainSceenStyle>({
   },
   switch: {
     width: rem(300),
+  },
+  nameInput: {
+    width: rem(300),
+    height: rem(50),
+    backgroundColor: '#FFF',
+    borderRadius: rem(10),
   },
 });

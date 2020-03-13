@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { View, Text } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 import LinearGradient from 'react-native-linear-gradient';
 import SwitchSelector, {
@@ -10,7 +10,7 @@ import SwitchSelector, {
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { StoreState } from '../../interfaces';
-import { setDifficulty, createNewGame } from '../../redux/actions';
+import { setDifficulty, createNewGame, setName } from '../../redux/actions';
 
 import { ROUTES, DIFFICULTY } from '../../constants';
 
@@ -24,6 +24,7 @@ interface MainScreenProps extends NavigationStackScreenProps {
   difficulty: Difficulty;
   name: string;
   setDifficulty: (diff: Difficulty) => void;
+  setName: (value: string) => void;
   createNewGame: (diff: Difficulty) => void;
 }
 
@@ -56,13 +57,19 @@ const mapDifficultyToNum = (difficulty: Difficulty): number => {
 
 class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
   public render() {
-    const { navigation, difficulty } = this.props;
+    const { navigation, difficulty, name } = this.props;
     return (
       <LinearGradient style={styles.container} colors={['#6A4D6B', '#9E5D75']}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>SUDOKU</Text>
         </View>
         <View style={styles.buttonsContainer}>
+          <TextInput
+            style={{ ...styles.nameInput, ...styles.buttonSpacing }}
+            value={name}
+            onChangeText={this.props.setName}
+            placeholder="Enter your name..."
+          />
           <SwitchSelector
             style={{ ...styles.switch, ...styles.buttonSpacing }}
             buttonColor="#7953CF"
@@ -107,6 +114,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       setDifficulty,
+      setName,
       createNewGame,
     },
     dispatch,
