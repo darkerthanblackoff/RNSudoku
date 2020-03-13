@@ -68,7 +68,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             options={switchOptions}
             initial={0}
             value={mapDifficultyToNum(difficulty)}
-            onPress={val => this.props.setDifficulty(val as Difficulty)}
+            onPress={this.props.setDifficulty}
           />
           <MenuButton
             style={styles.buttonSpacing}
