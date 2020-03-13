@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 
 import { View } from 'react-native';
+import { Stopwatch } from 'react-native-stopwatch-timer';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
-
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { StoreState } from '../../interfaces';
@@ -11,6 +11,7 @@ import {
   selectCell,
   updateBoard,
   placeImValue,
+  startTimer,
 } from '../../redux/actions';
 
 import { NumberButton, Cell } from '../../components';
@@ -22,10 +23,13 @@ interface GameScreenProps extends NavigationStackScreenProps {
   board: Array<Array<BoardCell>> | null;
   selectedRow: number | null;
   selectedColumn: number | null;
+  timerTicks: boolean;
+  timerResets: boolean;
   init: () => void;
   selectCell: (i: number, j: number) => void;
   updateBoard: () => void;
   placeImValue: (val: number) => void;
+  startTimer: () => void;
 }
 
 interface GameScreenState {}
@@ -41,6 +45,10 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
     this.props.init();
   }
 
+  public componentDidMount() {
+    this.props.startTimer();
+  }
+
   private numberButtonPress(value: number) {
     if (this.props.selectedRow || this.props.selectedColumn) {
       this.props.placeImValue(value);
@@ -48,7 +56,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 
   public render() {
-    const { board, selectedRow, selectedColumn } = this.props;
+    const { board, selectedRow, selectedColumn, timerTicks } = this.props;
 
     return (
       <>
@@ -57,8 +65,16 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
           <View style={styles.bgBottomRow} />
         </View>
         <View style={styles.contentContainer}>
-          <View style={styles.topBarContainer} />
           <View style={styles.boardContainer}>
+            <View style={styles.topBarContainer}>
+              <Stopwatch
+                start={timerTicks}
+                options={{
+                  container: {},
+                  text: { fontSize: 20, color: '#FFF', fontWeight: 'bold' },
+                }}
+              />
+            </View>
             <View style={styles.board}>
               {board &&
                 board.map((row, rIndex) => (
@@ -119,11 +135,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 }
 
-const mapStateToProps = (STORE: StoreState) => ({
-  board: STORE.GAME.board,
-  selectedRow: STORE.GAME.selectedRow,
-  selectedColumn: STORE.GAME.selectedColumn,
-});
+const mapStateToProps = (STORE: StoreState) => ({ ...STORE.GAME });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -132,6 +144,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       selectCell,
       updateBoard,
       placeImValue,
+      startTimer,
     },
     dispatch,
   );

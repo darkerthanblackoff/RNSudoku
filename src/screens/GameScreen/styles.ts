@@ -37,8 +37,10 @@ export const styles = StyleSheet.create<GameSceenStyle>({
     flex: 1,
   },
   topBarContainer: {
-    flex: 1,
     width: '100%',
+    alignItems: 'center',
+    alignContent: 'center',
+    marginBottom: rem(20),
   },
   numberButtonsContainer: {
     flex: 3,

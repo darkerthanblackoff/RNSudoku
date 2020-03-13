@@ -6,6 +6,8 @@ const INITIAL_STATE: GameState = {
   board: null,
   selectedRow: null,
   selectedColumn: null,
+  timerTicks: false,
+  timerResets: false,
 };
 
 const GameReducer = (
@@ -39,6 +41,21 @@ const GameReducer = (
       return {
         ...state,
         board: b.getBoard(),
+      };
+    case ACTIONS.GAME.TIMER_START:
+      return {
+        ...state,
+        timerTicks: true,
+      };
+    case ACTIONS.GAME.TIMER_STOP:
+      return {
+        ...state,
+        timerTicks: false,
+      };
+    case ACTIONS.GAME.TIMER_RESET:
+      return {
+        ...state,
+        timerResets: true,
       };
     default:
       return state;

@@ -17,3 +17,15 @@ export const placeImValue = (val: number) => ({
   type: ACTIONS.GAME.PLACE_IM_VAL,
   payload: val,
 });
+
+export const startTimer = () => ({
+  type: ACTIONS.GAME.TIMER_START,
+});
+
+export const stopTimer = () => ({
+  type: ACTIONS.GAME.TIMER_STOP,
+});
+
+export const resetTimer = () => ({
+  type: ACTIONS.GAME.TIMER_RESET,
+});
