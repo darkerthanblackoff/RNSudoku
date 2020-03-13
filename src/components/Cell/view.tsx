@@ -18,8 +18,8 @@ const Cell = (props: CellProps) => {
   const bordRads = {
     borderBottomWidth: i + 1 === 3 || i + 1 === 6 ? 2 : 0,
     borderRightWidth: j + 1 === 3 || j + 1 === 6 ? 2 : 0,
-    borderBottomColor: (i + 1 === 3 || i + 1 === 6) && '#682B57',
-    borderRightColor: (j + 1 === 3 || j + 1 === 6) && '#682B57',
+    borderBottomColor: i + 1 === 3 || i + 1 === 6 ? '#682B57' : '#D5B9D0',
+    borderRightColor: j + 1 === 3 || j + 1 === 6 ? '#682B57' : '#D5B9D0',
     borderTopLeftRadius: i === 0 && j === 0 ? 10 : 0,
     borderTopRightRadius: i === 0 && j === 8 ? 10 : 0,
     borderBottomLeftRadius: i === 8 && j === 0 ? 10 : 0,

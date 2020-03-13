@@ -6,6 +6,7 @@ export interface GameState {
   selectedRow: number | null;
   selectedColumn: number | null;
   timerTicks: boolean;
+  timerValue: number;
   timerResets: boolean;
 }
 

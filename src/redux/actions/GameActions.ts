@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux';
 import { ACTIONS } from '../../constants';
 
 export const createNewGame = (difficulty: 'EASY' | 'MEDIUM' | 'HARD') => ({
@@ -5,17 +6,9 @@ export const createNewGame = (difficulty: 'EASY' | 'MEDIUM' | 'HARD') => ({
   payload: difficulty,
 });
 
-export const init = () => ({
-  type: ACTIONS.GAME.INIT,
-});
-
 export const selectCell = (i: number, j: number) => ({
   type: ACTIONS.GAME.SELECT_CELL,
   payload: { i, j },
-});
-
-export const updateBoard = () => ({
-  type: ACTIONS.GAME.UPDATE_BOARD,
 });
 
 export const placeImValue = (val: number) => ({
@@ -30,6 +23,15 @@ export const startTimer = () => ({
 export const stopTimer = () => ({
   type: ACTIONS.GAME.TIMER_STOP,
 });
+
+export const getMsecs = (lastValueMsecs: number) => (dispatch: Dispatch) => {
+  setTimeout(() => {
+    dispatch({
+      type: ACTIONS.GAME.TIMER_GET_MSECS,
+      payload: lastValueMsecs,
+    });
+  }, 1000);
+};
 
 export const resetTimer = () => ({
   type: ACTIONS.GAME.TIMER_RESET,

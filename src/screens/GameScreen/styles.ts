@@ -15,6 +15,7 @@ export interface GameSceenStyle {
   numberButtonsRow: ViewStyle;
   numberButtons: ViewStyle;
   difficultyText: TextStyle;
+  stopwatchText: TextStyle;
 }
 
 export const styles = StyleSheet.create<GameSceenStyle>({
@@ -71,4 +72,5 @@ export const styles = StyleSheet.create<GameSceenStyle>({
     borderRadius: rem(10),
   },
   difficultyText: { fontWeight: 'bold', color: '#FFF', fontSize: 20 },
+  stopwatchText: { fontSize: 20, color: '#FFF', fontWeight: 'bold' },
 });

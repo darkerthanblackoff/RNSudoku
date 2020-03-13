@@ -1,20 +1,20 @@
 import React, { PureComponent } from 'react';
 
 import { View, Text } from 'react-native';
-import { Stopwatch } from 'react-native-stopwatch-timer';
+// import { Stopwatch } from 'react-native-stopwatch-timer';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { StoreState } from '../../interfaces';
 import {
-  init,
   selectCell,
-  updateBoard,
   placeImValue,
   startTimer,
+  getMsecs,
+  stopTimer,
 } from '../../redux/actions';
 
-import { NumberButton, Cell, InfoBox } from '../../components';
+import { NumberButton, Cell, InfoBox, Stopwatch } from '../../components';
 import { styles } from './styles';
 
 import { BoardCell } from '../../gen';
@@ -24,6 +24,7 @@ interface GameScreenProps extends NavigationStackScreenProps {
   selectedRow: number | null;
   selectedColumn: number | null;
   timerTicks: boolean;
+  timerValue: number;
   timerResets: boolean;
   difficulty: string;
   init: () => void;
@@ -31,6 +32,8 @@ interface GameScreenProps extends NavigationStackScreenProps {
   updateBoard: () => void;
   placeImValue: (val: number) => void;
   startTimer: () => void;
+  stopTimer: () => void;
+  getMsecs: (msecs: number) => void;
 }
 
 interface GameScreenState {}
@@ -43,6 +46,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
     super(props);
 
     this.numberButtonPress = this.numberButtonPress.bind(this);
+    this.getTimerValue = this.getTimerValue.bind(this);
   }
 
   public componentDidMount() {
@@ -50,8 +54,14 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 
   private numberButtonPress(value: number) {
-    if (this.props.selectedRow || this.props.selectedColumn) {
+    if (this.props.selectedRow !== null && this.props.selectedColumn !== null) {
       this.props.placeImValue(value);
+    }
+  }
+
+  private getTimerValue(msecs: number) {
+    if (((msecs % 60000) / 1000).toFixed(0) % 1 === 0) {
+      this.props.getMsecs(msecs);
     }
   }
 
@@ -61,6 +71,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
       selectedRow,
       selectedColumn,
       timerTicks,
+      timerValue,
       difficulty,
     } = this.props;
 
@@ -76,10 +87,9 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
               <InfoBox label="Errors Count: 0" />
               <Stopwatch
                 start={timerTicks}
-                options={{
-                  container: {},
-                  text: { fontSize: 20, color: '#FFF', fontWeight: 'bold' },
-                }}
+                startTime={timerValue}
+                getMsecs={this.getTimerValue}
+                textStyle={styles.stopwatchText}
               />
               <Text style={styles.difficultyText}>{difficulty}</Text>
             </View>
@@ -126,13 +136,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
                   key={val}
                   style={styles.numberButtons}
                   value={val}
-                  onPress={
-                    val > 0
-                      ? this.numberButtonPress
-                      : () => {
-                          this.props.updateBoard();
-                        }
-                  }
+                  onPress={val > 0 ? this.numberButtonPress : () => {}}
                 />
               ))}
             </View>
@@ -155,11 +159,11 @@ const mapStateToProps = (STORE: StoreState) => {
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      init,
       selectCell,
-      updateBoard,
       placeImValue,
       startTimer,
+      getMsecs,
+      stopTimer,
     },
     dispatch,
   );

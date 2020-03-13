@@ -7,6 +7,7 @@ const INITIAL_STATE: GameState = {
   selectedRow: null,
   selectedColumn: null,
   timerTicks: false,
+  timerValue: 0,
   timerResets: false,
 };
 
@@ -18,16 +19,9 @@ const GameReducer = (
     case ACTIONS.GAME.NEW:
       return {
         ...state,
+        timerValue: 0,
         board: new StupidSudokuGenerator()
           .generate(action.payload)
-          .getBoard()
-          .toArray(),
-      };
-    case ACTIONS.GAME.INIT:
-      return {
-        ...state,
-        board: new StupidSudokuGenerator()
-          .generate('EASY')
           .getBoard()
           .toArray(),
       };
@@ -36,14 +30,6 @@ const GameReducer = (
         ...state,
         selectedRow: action.payload.i,
         selectedColumn: action.payload.j,
-      };
-    case ACTIONS.GAME.UPDATE_BOARD:
-      return {
-        ...state,
-        board: new StupidSudokuGenerator()
-          .generate('EASY')
-          .getBoard()
-          .toArray(),
       };
     case ACTIONS.GAME.PLACE_IM_VAL:
       const b = new Board(state.board!);
@@ -70,6 +56,11 @@ const GameReducer = (
       return {
         ...state,
         timerResets: true,
+      };
+    case ACTIONS.GAME.TIMER_GET_MSECS:
+      return {
+        ...state,
+        timerValue: action.payload,
       };
     default:
       return state;
