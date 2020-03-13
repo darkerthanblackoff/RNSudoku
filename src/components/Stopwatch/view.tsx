@@ -11,8 +11,8 @@ interface StopwatchProps {
   getTime?: (time: string) => void;
   startTime?: number;
   getMsecs?: (time: number) => void;
-  containerStyle: ViewStyle;
-  textStyle: TextStyle;
+  containerStyle?: ViewStyle;
+  textStyle?: TextStyle;
 }
 
 interface StopwatchState {
