@@ -147,6 +147,10 @@ class StupidSudokuGenerator {
       }
     }
   }
+
+  public getBoard() {
+    return this.board;
+  }
 }
 
 export default StupidSudokuGenerator;

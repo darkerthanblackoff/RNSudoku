@@ -18,7 +18,10 @@ const GameReducer = (
     case ACTIONS.GAME.INIT:
       return {
         ...state,
-        board: new StupidSudokuGenerator().generate('EASY').board.getBoard(),
+        board: new StupidSudokuGenerator()
+          .generate('EASY')
+          .getBoard()
+          .toArray(),
       };
     case ACTIONS.GAME.SELECT_CELL:
       return {
@@ -29,7 +32,10 @@ const GameReducer = (
     case ACTIONS.GAME.UPDATE_BOARD:
       return {
         ...state,
-        board: new StupidSudokuGenerator().generate('EASY').board.getBoard(),
+        board: new StupidSudokuGenerator()
+          .generate('EASY')
+          .getBoard()
+          .toArray(),
       };
     case ACTIONS.GAME.PLACE_IM_VAL:
       const b = new Board(state.board!);
@@ -40,7 +46,7 @@ const GameReducer = (
 
       return {
         ...state,
-        board: b.getBoard(),
+        board: b.toArray(),
       };
     case ACTIONS.GAME.TIMER_START:
       return {

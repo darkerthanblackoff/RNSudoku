@@ -74,7 +74,7 @@ class Board {
     return result.length > 0 ? result : undefined;
   }
 
-  public getBoard() {
+  public toArray() {
     return [...this._board];
   }
 }
