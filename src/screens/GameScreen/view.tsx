@@ -14,7 +14,7 @@ import {
   startTimer,
 } from '../../redux/actions';
 
-import { NumberButton, Cell } from '../../components';
+import { NumberButton, Cell, InfoBox } from '../../components';
 import { styles } from './styles';
 
 import { BoardCell } from '../../gen';
@@ -67,6 +67,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
         <View style={styles.contentContainer}>
           <View style={styles.boardContainer}>
             <View style={styles.topBarContainer}>
+              <InfoBox label="Errors Count: 0" />
               <Stopwatch
                 start={timerTicks}
                 options={{
