@@ -23,6 +23,7 @@ type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
 interface MainScreenProps extends NavigationStackScreenProps {
   difficulty: Difficulty;
   name: string;
+  canResume: boolean;
   setDifficulty: (diff: Difficulty) => void;
   setName: (value: string) => void;
   createNewGame: (diff: Difficulty) => void;
@@ -57,7 +58,8 @@ const mapDifficultyToNum = (difficulty: Difficulty): number => {
 
 class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
   public render() {
-    const { navigation, difficulty, name } = this.props;
+    const { navigation, difficulty, name, canResume } = this.props;
+
     return (
       <LinearGradient style={styles.container} colors={['#6A4D6B', '#9E5D75']}>
         <View style={styles.titleContainer}>
@@ -88,6 +90,17 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             color="#EC4F64"
             icon={<Play fill="#FFF" height={28} width={28} />}
           />
+          {canResume && (
+            <MenuButton
+              style={styles.buttonSpacing}
+              label="Resume Game"
+              onPress={() => {
+                navigation.navigate(ROUTES.GAME);
+              }}
+              color="#F4C956"
+              icon={<Options fill="#FFF" height={28} width={28} />}
+            />
+          )}
           <MenuButton
             style={styles.buttonSpacing}
             label="Leaderboard"
@@ -95,20 +108,16 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             color="#30AEEB"
             icon={<LeaderBoard fill="#FFF" height={28} width={28} />}
           />
-          <MenuButton
-            style={styles.buttonSpacing}
-            label="Options"
-            onPress={() => {}}
-            color="#F4C956"
-            icon={<Options fill="#FFF" height={28} width={28} />}
-          />
         </View>
       </LinearGradient>
     );
   }
 }
 
-const mapStateToProps = (STORE: StoreState) => ({ ...STORE.SETTINGS });
+const mapStateToProps = (STORE: StoreState) => {
+  const { GAME, SETTINGS } = STORE;
+  return { ...SETTINGS, canResume: GAME.board !== null };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
