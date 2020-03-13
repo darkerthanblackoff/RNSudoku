@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { rem } from '../../utils/dim';
 
 export interface GameSceenStyle {
@@ -14,6 +14,7 @@ export interface GameSceenStyle {
   numberButtonsContainer: ViewStyle;
   numberButtonsRow: ViewStyle;
   numberButtons: ViewStyle;
+  difficultyText: TextStyle;
 }
 
 export const styles = StyleSheet.create<GameSceenStyle>({
@@ -69,4 +70,5 @@ export const styles = StyleSheet.create<GameSceenStyle>({
   board: {
     borderRadius: rem(10),
   },
+  difficultyText: { fontWeight: 'bold', color: '#FFF', fontSize: 20 },
 });

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { Stopwatch } from 'react-native-stopwatch-timer';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -25,6 +25,7 @@ interface GameScreenProps extends NavigationStackScreenProps {
   selectedColumn: number | null;
   timerTicks: boolean;
   timerResets: boolean;
+  difficulty: string;
   init: () => void;
   selectCell: (i: number, j: number) => void;
   updateBoard: () => void;
@@ -55,7 +56,13 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 
   public render() {
-    const { board, selectedRow, selectedColumn, timerTicks } = this.props;
+    const {
+      board,
+      selectedRow,
+      selectedColumn,
+      timerTicks,
+      difficulty,
+    } = this.props;
 
     return (
       <>
@@ -74,6 +81,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
                   text: { fontSize: 20, color: '#FFF', fontWeight: 'bold' },
                 }}
               />
+              <Text style={styles.difficultyText}>{difficulty}</Text>
             </View>
             <View style={styles.board}>
               {board &&
@@ -135,7 +143,14 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 }
 
-const mapStateToProps = (STORE: StoreState) => ({ ...STORE.GAME });
+const mapStateToProps = (STORE: StoreState) => {
+  const { GAME, SETTINGS } = STORE;
+
+  return {
+    ...GAME,
+    difficulty: SETTINGS.difficulty,
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
