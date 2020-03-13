@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { ROUTES } from '../../constants';
 
 import { MenuButton } from '../../components';
-import { Play, Tips, Options } from '../../assets/svg';
+import { Play, Options, LeaderBoard } from '../../assets/svg';
 import { styles } from './styles';
 
 interface MainScreenProps extends NavigationStackScreenProps {}
@@ -34,10 +34,10 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
           />
           <MenuButton
             style={styles.buttonSpacing}
-            label="Tips"
+            label="Leaderboard"
             onPress={() => {}}
             color="#30AEEB"
-            icon={<Tips fill="#FFF" height={28} width={28} />}
+            icon={<LeaderBoard fill="#FFF" height={28} width={28} />}
           />
           <MenuButton
             style={styles.buttonSpacing}
