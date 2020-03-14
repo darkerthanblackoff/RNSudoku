@@ -1,5 +1,4 @@
 import Board from './Board';
-// import BoardCell from './BoardCell';
 import { getRandomIntInclusive } from '../utils/random';
 
 const _board = [
@@ -15,18 +14,19 @@ const _board = [
 ];
 
 class StupidSudokuGenerator {
-  public board: Board;
+  private board: Board;
+  private hidedCount: number;
 
   public constructor() {
     this.board = new Board(Board.from(_board));
+    this.hidedCount = 0;
   }
 
   public generate(difficulty: 'EASY' | 'MEDIUM' | 'HARD') {
-    let newBoard = new StupidSudokuGenerator();
-    newBoard.shuffle(20);
-    newBoard.hide(difficulty);
+    this.shuffle(20);
+    this.hide(difficulty);
 
-    return newBoard;
+    return this.board;
   }
 
   public shuffle(times: number) {
@@ -137,6 +137,8 @@ class StupidSudokuGenerator {
       cellsToHide = 54;
     }
 
+    this.hidedCount = cellsToHide;
+
     while (cellsToHide > 0) {
       const i = getRandomIntInclusive(0, 8);
       const j = getRandomIntInclusive(0, 8);
@@ -146,6 +148,10 @@ class StupidSudokuGenerator {
         cellsToHide--;
       }
     }
+  }
+
+  public getHidenCount() {
+    return this.hidedCount;
   }
 
   public getBoard() {

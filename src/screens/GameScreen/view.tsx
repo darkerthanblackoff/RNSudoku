@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 // import { Stopwatch } from 'react-native-stopwatch-timer';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -28,6 +28,8 @@ interface GameScreenProps extends NavigationStackScreenProps {
   timerResets: boolean;
   currentDifficulty: string;
   errorsCount: number;
+  currentGamePlayer: string;
+  isGameFinished: boolean;
   selectCell: (i: number, j: number) => void;
   placeImValue: (val: number) => void;
   startTimer: () => void;
@@ -50,6 +52,12 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
 
   public componentDidMount() {
     this.props.startTimer();
+  }
+
+  public componentDidUpdate() {
+    if (this.props.isGameFinished) {
+      alert('Finish');
+    }
   }
 
   private numberButtonPress(value: number) {

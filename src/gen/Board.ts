@@ -74,6 +74,14 @@ class Board {
     return result.length > 0 ? result : undefined;
   }
 
+  public forEach(
+    cbFn: (cell: BoardCell, rowIndex?: number, columnIndex?: number) => boolean,
+  ) {
+    this._board.forEach((row, rIndex) =>
+      row.forEach((cell, cIndex) => cbFn(cell, rIndex, cIndex)),
+    );
+  }
+
   public toArray() {
     return [...this._board];
   }

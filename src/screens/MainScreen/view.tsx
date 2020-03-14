@@ -26,7 +26,7 @@ interface MainScreenProps extends NavigationStackScreenProps {
   canResume: boolean;
   setDifficulty: (diff: Difficulty) => void;
   setName: (value: string) => void;
-  createNewGame: (diff: Difficulty) => void;
+  createNewGame: (diff: Difficulty, name: string) => void;
 }
 
 interface MainScreenState {}
@@ -84,7 +84,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             style={styles.buttonSpacing}
             label="Start Game"
             onPress={() => {
-              this.props.createNewGame(difficulty);
+              this.props.createNewGame(difficulty, name);
               navigation.navigate(ROUTES.GAME);
             }}
             color="#EC4F64"

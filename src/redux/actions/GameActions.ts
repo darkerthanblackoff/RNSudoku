@@ -1,9 +1,12 @@
 import { Dispatch } from 'redux';
 import { ACTIONS } from '../../constants';
 
-export const createNewGame = (difficulty: 'EASY' | 'MEDIUM' | 'HARD') => ({
+export const createNewGame = (
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD',
+  playerName: string,
+) => ({
   type: ACTIONS.GAME.NEW,
-  payload: difficulty,
+  payload: { difficulty, playerName },
 });
 
 export const selectCell = (i: number, j: number) => ({

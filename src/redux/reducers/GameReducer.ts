@@ -11,6 +11,9 @@ const INITIAL_STATE: GameState = {
   timerResets: false,
   currentDifficulty: 'EASY',
   errorsCount: 0,
+  cellsToResolve: 0,
+  currentGamePlayer: '',
+  isGameFinished: false,
 };
 
 const GameReducer = (
@@ -19,14 +22,16 @@ const GameReducer = (
 ): GameState => {
   switch (action.type) {
     case ACTIONS.GAME.NEW:
+      const generator = new StupidSudokuGenerator();
+      const newBoard = generator.generate(action.payload.difficulty);
+
       return {
         ...state,
         timerValue: 0,
-        currentDifficulty: action.payload,
-        board: new StupidSudokuGenerator()
-          .generate(action.payload)
-          .getBoard()
-          .toArray(),
+        currentDifficulty: action.payload.difficulty,
+        board: newBoard.toArray(),
+        cellsToResolve: generator.getHidenCount(),
+        currentGamePlayer: action.payload.playerName,
       };
     case ACTIONS.GAME.SELECT_CELL:
       return {
@@ -37,22 +42,35 @@ const GameReducer = (
     case ACTIONS.GAME.PLACE_IM_VAL:
       const board = new Board(state.board!);
       const cell = board.getCell(state.selectedRow!, state.selectedColumn!);
-      const prevCorrectnes = cell.isCorrect();
-      cell.setImValue(action.payload);
-      const nextCorrectnes = cell.isCorrect();
+
+      if (cell.isVisible()) {
+        return { ...state };
+      }
 
       let { errorsCount } = state;
       let errors = errorsCount;
-      if (prevCorrectnes) {
-        errors = nextCorrectnes ? errors : errors + 1;
-      } else {
-        errors = nextCorrectnes ? errors - 1 : errors;
+      let cells = state.cellsToResolve;
+
+      const prevCorrectnes = cell.isCorrect();
+      if (cell.getImValue() === null) {
+        cells -= 1;
+      }
+      cell.setImValue(action.payload);
+      const nextCorrectnes = cell.isCorrect();
+
+      if (prevCorrectnes && !nextCorrectnes) {
+        errors += 1;
+        cells += 1;
+      } else if (!prevCorrectnes && nextCorrectnes) {
+        errors -= 1;
+        cells -= 1;
       }
 
       return {
         ...state,
         board: board.toArray(),
         errorsCount: errors,
+        cellsToResolve: cells,
       };
     case ACTIONS.GAME.TIMER_START:
       return {
@@ -70,9 +88,13 @@ const GameReducer = (
         timerResets: true,
       };
     case ACTIONS.GAME.TIMER_GET_MSECS:
+      const isGameFinished =
+        state.cellsToResolve === 0 && state.errorsCount === 0;
       return {
         ...state,
         timerValue: action.payload,
+        timerTicks: !isGameFinished,
+        isGameFinished,
       };
     case ACTIONS.GAME.ADD_ERROR:
       return { ...state, errorsCount: state.errorsCount + 1 };

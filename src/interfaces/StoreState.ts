@@ -10,6 +10,9 @@ export interface GameState {
   timerResets: boolean;
   currentDifficulty: 'EASY' | 'MEDIUM' | 'HARD';
   errorsCount: number;
+  cellsToResolve: number;
+  currentGamePlayer: string;
+  isGameFinished: boolean;
 }
 
 export interface SettingsState {
