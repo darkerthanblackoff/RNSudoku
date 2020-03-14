@@ -12,7 +12,12 @@ export const createNewGame = (
 
   return {
     type: ACTIONS.GAME.NEW,
-    payload: { difficulty, currentGamePlayer, board, cellsToResolve },
+    payload: {
+      currentDifficulty: difficulty,
+      currentGamePlayer,
+      board,
+      cellsToResolve,
+    },
   };
 };
 
