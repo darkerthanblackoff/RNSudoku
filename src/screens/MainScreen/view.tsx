@@ -52,7 +52,7 @@ const mapDifficultyToNum = (difficulty: Difficulty): number => {
   } else if (difficulty === 'MEDIUM') {
     return 1;
   } else {
-    return 0;
+    return 2;
   }
 };
 
