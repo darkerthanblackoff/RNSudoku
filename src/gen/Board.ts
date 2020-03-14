@@ -16,7 +16,7 @@ class Board {
   }
 
   public getCell(rowIndex: number, columnIndex: number) {
-    return this._board[rowIndex][columnIndex];
+    return { ...this._board[rowIndex][columnIndex] };
   }
 
   public setCell(rowIndex: number, columnIndex: number, newValue: BoardCell) {

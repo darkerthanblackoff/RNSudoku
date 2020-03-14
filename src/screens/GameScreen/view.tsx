@@ -31,7 +31,7 @@ interface GameScreenProps extends NavigationStackScreenProps {
   currentGamePlayer: string;
   isGameFinished: boolean;
   selectCell: (i: number, j: number) => void;
-  placeImValue: (val: number) => void;
+  placeImValue: (selRow: number, selCol: number, val: number) => void;
   startTimer: () => void;
   stopTimer: () => void;
   getMsecs: (msecs: number) => void;
@@ -61,8 +61,9 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 
   private numberButtonPress(value: number) {
-    if (this.props.selectedRow !== null && this.props.selectedColumn !== null) {
-      this.props.placeImValue(value);
+    const { selectedRow, selectedColumn } = this.props;
+    if (selectedRow !== null && selectedColumn !== null) {
+      this.props.placeImValue(selectedRow, selectedColumn, value);
     }
   }
 

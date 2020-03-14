@@ -25,10 +25,47 @@ export const selectCell = (i: number, j: number) => (dispatch: Dispatch) => {
   }, 0);
 };
 
-export const placeImValue = (val: number) => ({
-  type: ACTIONS.GAME.PLACE_IM_VAL,
-  payload: val,
-});
+export const placeImValue = (
+  selectedRow: number,
+  selectedColumn: number,
+  value: number,
+) => (dispatch: Dispatch) => {
+  const board = StupidSudokuGenerator.getInstance().getBoard();
+  const cell = board.getCell(selectedRow, selectedColumn);
+
+  if (cell.isVisible()) {
+    return;
+  }
+
+  const prevCell = Object.assign({}, cell);
+  const prevCorrectness = cell.isCorrect();
+  const prevValue = cell.getImValue();
+  cell.setImValue(value);
+  const nextValue = cell.getImValue();
+  const nextCorrectness = cell.isCorrect();
+
+  if (prevValue === null) {
+    dispatch(subCells());
+  }
+  if (nextValue === null) {
+    dispatch(addCells());
+  }
+
+  if (prevCorrectness && !nextCorrectness) {
+    dispatch(addError());
+    dispatch(addCells());
+  } else if (!prevCorrectness && nextCorrectness) {
+    dispatch(subError());
+    dispatch(subCells());
+  }
+
+  const undoItem = { i: selectedRow, j: selectedColumn, prevValue };
+
+  dispatch({
+    type: ACTIONS.GAME.PLACE_IM_VAL,
+    payload: { board: board.toArray(), undoItem },
+  });
+};
 
 export const startTimer = () => ({
   type: ACTIONS.GAME.TIMER_START,
@@ -57,4 +94,16 @@ export const addError = () => ({
 
 export const subError = () => ({
   type: ACTIONS.GAME.SUB_ERROR,
+});
+
+export const addCells = () => ({
+  type: ACTIONS.GAME.ADD_CELLS_TO_RESOLVE,
+});
+
+export const subCells = () => ({
+  type: ACTIONS.GAME.SUB_CELLS_TO_RESOLVE,
+});
+
+export const undo = () => ({
+  type: ACTIONS.GAME.UNDO_IM_VAL,
 });

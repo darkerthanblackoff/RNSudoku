@@ -13,6 +13,7 @@ export interface GameState {
   cellsToResolve: number;
   currentGamePlayer: string;
   isGameFinished: boolean;
+  undoQueue: Array<{ i: number; j: number; prevValue: number | null }>;
 }
 
 export interface SettingsState {

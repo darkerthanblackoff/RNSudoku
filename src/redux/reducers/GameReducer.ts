@@ -1,6 +1,6 @@
 import { GameState } from '../../interfaces';
 import { ACTIONS } from '../../constants';
-import { Board } from '../../gen';
+import { Board, BoardCell } from '../../gen';
 
 const INITIAL_STATE: GameState = {
   board: null,
@@ -14,6 +14,7 @@ const INITIAL_STATE: GameState = {
   cellsToResolve: 0,
   currentGamePlayer: '',
   isGameFinished: false,
+  undoQueue: [],
 };
 
 const GameReducer = (
@@ -34,38 +35,25 @@ const GameReducer = (
         selectedColumn: action.payload.j,
       };
     case ACTIONS.GAME.PLACE_IM_VAL:
-      const board = new Board(state.board!);
-      const cell = board.getCell(state.selectedRow!, state.selectedColumn!);
+      const board = action.payload.board;
+      const undoItem = action.payload.undoItem;
 
-      if (cell.isVisible()) {
-        return { ...state };
+      // if (prevCell.isVisible()) {
+      //   return { ...state };
+      // }
+
+      if (state.undoQueue.length === 5) {
+        state.undoQueue.shift();
       }
 
-      let { errorsCount } = state;
-      let errors = errorsCount;
-      let cells = state.cellsToResolve;
-
-      const prevCorrectnes = cell.isCorrect();
-      if (cell.getImValue() === null) {
-        cells -= 1;
-      }
-      cell.setImValue(action.payload);
-      const nextCorrectnes = cell.isCorrect();
-
-      if (prevCorrectnes && !nextCorrectnes) {
-        errors += 1;
-        cells += 1;
-      } else if (!prevCorrectnes && nextCorrectnes) {
-        errors -= 1;
-        cells -= 1;
-      }
+      state.undoQueue.push(undoItem);
 
       return {
         ...state,
-        board: board.toArray(),
-        errorsCount: errors,
-        cellsToResolve: cells,
+        board,
       };
+    case ACTIONS.GAME.UNDO_IM_VAL:
+      return { ...state };
     case ACTIONS.GAME.TIMER_START:
       return {
         ...state,
@@ -92,6 +80,12 @@ const GameReducer = (
       };
     case ACTIONS.GAME.ADD_ERROR:
       return { ...state, errorsCount: state.errorsCount + 1 };
+    case ACTIONS.GAME.SUB_ERROR:
+      return { ...state, errorsCount: state.errorsCount - 1 };
+    case ACTIONS.GAME.ADD_CELLS_TO_RESOLVE:
+      return { ...state, cellsToResolve: state.cellsToResolve + 1 };
+    case ACTIONS.GAME.SUB_CELLS_TO_RESOLVE:
+      return { ...state, cellsToResolve: state.cellsToResolve - 1 };
     default:
       return state;
   }
