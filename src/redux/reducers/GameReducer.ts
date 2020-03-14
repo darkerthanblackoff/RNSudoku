@@ -49,8 +49,6 @@ const GameReducer = (
         errors = nextCorrectnes ? errors - 1 : errors;
       }
 
-      console.log(errors);
-
       return {
         ...state,
         board: board.toArray(),
