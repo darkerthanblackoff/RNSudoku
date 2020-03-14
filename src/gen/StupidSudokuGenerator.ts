@@ -16,13 +16,25 @@ const _board = [
 class StupidSudokuGenerator {
   private board: Board;
   private hidedCount: number;
+  private static instance: StupidSudokuGenerator;
 
-  public constructor() {
+  public static getInstance() {
+    if (!StupidSudokuGenerator.instance) {
+      StupidSudokuGenerator.instance = new StupidSudokuGenerator();
+    }
+
+    return StupidSudokuGenerator.instance;
+  }
+
+  private constructor() {
     this.board = new Board(Board.from(_board));
     this.hidedCount = 0;
   }
 
   public generate(difficulty: 'EASY' | 'MEDIUM' | 'HARD') {
+    this.board = new Board(Board.from(_board));
+    this.hidedCount = 0;
+
     this.shuffle(20);
     this.hide(difficulty);
 

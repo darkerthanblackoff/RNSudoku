@@ -1,18 +1,29 @@
 import { Dispatch } from 'redux';
 import { ACTIONS } from '../../constants';
+import { StupidSudokuGenerator } from '../../gen';
 
 export const createNewGame = (
   difficulty: 'EASY' | 'MEDIUM' | 'HARD',
-  playerName: string,
-) => ({
-  type: ACTIONS.GAME.NEW,
-  payload: { difficulty, playerName },
-});
+  currentGamePlayer: string,
+) => {
+  const generator = StupidSudokuGenerator.getInstance();
+  const board = generator.generate(difficulty).toArray();
+  const cellsToResolve = generator.getHidenCount();
 
-export const selectCell = (i: number, j: number) => ({
-  type: ACTIONS.GAME.SELECT_CELL,
-  payload: { i, j },
-});
+  return {
+    type: ACTIONS.GAME.NEW,
+    payload: { difficulty, currentGamePlayer, board, cellsToResolve },
+  };
+};
+
+export const selectCell = (i: number, j: number) => (dispatch: Dispatch) => {
+  setTimeout(() => {
+    dispatch({
+      type: ACTIONS.GAME.SELECT_CELL,
+      payload: { i, j },
+    });
+  }, 0);
+};
 
 export const placeImValue = (val: number) => ({
   type: ACTIONS.GAME.PLACE_IM_VAL,
@@ -33,7 +44,7 @@ export const getMsecs = (lastValueMsecs: number) => (dispatch: Dispatch) => {
       type: ACTIONS.GAME.TIMER_GET_MSECS,
       payload: lastValueMsecs,
     });
-  }, 1000);
+  }, 0);
 };
 
 export const resetTimer = () => ({

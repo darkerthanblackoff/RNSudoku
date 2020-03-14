@@ -1,6 +1,6 @@
 import { GameState } from '../../interfaces';
 import { ACTIONS } from '../../constants';
-import { StupidSudokuGenerator, Board } from '../../gen';
+import { Board } from '../../gen';
 
 const INITIAL_STATE: GameState = {
   board: null,
@@ -22,16 +22,10 @@ const GameReducer = (
 ): GameState => {
   switch (action.type) {
     case ACTIONS.GAME.NEW:
-      const generator = new StupidSudokuGenerator();
-      const newBoard = generator.generate(action.payload.difficulty);
-
       return {
         ...state,
         timerValue: 0,
-        currentDifficulty: action.payload.difficulty,
-        board: newBoard.toArray(),
-        cellsToResolve: generator.getHidenCount(),
-        currentGamePlayer: action.payload.playerName,
+        ...action.payload,
       };
     case ACTIONS.GAME.SELECT_CELL:
       return {
