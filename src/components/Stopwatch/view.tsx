@@ -8,17 +8,17 @@ interface StopwatchProps {
   reset?: boolean;
   msecs?: boolean;
   laps?: boolean;
-  getTime?: (time: string) => void;
   startTime?: number;
-  getMsecs?: (time: number) => void;
   containerStyle?: ViewStyle;
   textStyle?: TextStyle;
+  getTime?: (time: string) => void;
+  getMsecs?: (time: number) => void;
 }
 
 interface StopwatchState {
-  startTime: Date | number | null;
-  stopTime: Date | number | null;
-  pausedTime: number | null;
+  startTime: number;
+  stopTime: number;
+  pausedTime: number;
   started: boolean;
   elapsed: number;
 }
@@ -27,18 +27,16 @@ class StopWatch extends PureComponent<StopwatchProps, StopwatchState> {
   private interval: any;
   public constructor(props: StopwatchProps) {
     super(props);
+
     const { startTime } = props;
+
     this.state = {
-      startTime: null,
-      stopTime: null,
-      pausedTime: null,
+      startTime: 0,
+      stopTime: 0,
+      pausedTime: 0,
       started: false,
       elapsed: startTime || 0,
     };
-    this.start = this.start.bind(this);
-    this.stop = this.stop.bind(this);
-    this.reset = this.reset.bind(this);
-    this.formatTime = this.formatTime.bind(this);
   }
 
   public componentDidMount() {
@@ -58,68 +56,68 @@ class StopWatch extends PureComponent<StopwatchProps, StopwatchState> {
     }
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  private start() {
+  private start = () => {
     if (this.props.laps && this.state.elapsed) {
-      let lap = new Date() - new Date(this.state.stopTime!);
+      let lap = Date.now() - this.state.stopTime;
       this.setState({
-        stopTime: null,
-        pausedTime: this.state.pausedTime! + lap,
+        stopTime: 0,
+        pausedTime: this.state.stopTime + lap,
       });
     }
 
     this.setState({
       startTime: this.state.elapsed
-        ? new Date() - this.state.elapsed
-        : new Date(),
+        ? Date.now() - this.state.elapsed
+        : Date.now(),
       started: true,
     });
 
     this.interval = this.interval
       ? this.interval
       : setInterval(() => {
-          this.setState({ elapsed: new Date() - this.state.startTime! });
+          this.setState({ elapsed: Date.now() - this.state.startTime });
         }, 1000);
-  }
-  private stop() {
+  };
+
+  private stop = () => {
     if (this.interval) {
       if (this.props.laps) {
-        this.setState({ stopTime: new Date() });
+        this.setState({ stopTime: Date.now() });
       }
 
       clearInterval(this.interval);
       this.interval = null;
     }
     this.setState({ started: false });
-  }
+  };
 
-  reset() {
+  private reset = () => {
     const { startTime } = this.props;
+
     this.setState({
       elapsed: startTime || 0,
-      startTime: null,
-      stopTime: null,
-      pausedTime: null,
+      startTime: 0,
+      stopTime: 0,
+      pausedTime: 0,
     });
-  }
+  };
 
-  formatTime() {
+  formatTime = () => {
     const { getTime, getMsecs } = this.props;
     const now = this.state.elapsed;
     const formatted = formatTimeString(now + '', false);
-    if (typeof getTime === 'function') {
-      getTime(formatted);
-    }
-    if (typeof getMsecs === 'function') {
-      getMsecs(now);
-    }
-    return formatted;
-  }
 
-  render() {
+    getTime && getTime(formatted);
+    getMsecs && getMsecs(now);
+
+    return formatted;
+  };
+
+  public render() {
     const { containerStyle, textStyle } = this.props;
     return (
       <View style={[styles.container, containerStyle]}>

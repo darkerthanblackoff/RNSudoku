@@ -71,6 +71,8 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             value={name}
             onChangeText={this.props.setName}
             placeholder="Enter your name..."
+            clearButtonMode="always"
+            returnKeyType="done"
           />
           <SwitchSelector
             style={{ ...styles.switch, ...styles.buttonSpacing }}

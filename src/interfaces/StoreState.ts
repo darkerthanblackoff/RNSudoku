@@ -7,6 +7,7 @@ export interface GameState {
   selectedColumn: number | null;
   timerTicks: boolean;
   timerValue: number;
+  timerFine: number;
   timerResets: boolean;
   currentDifficulty: 'EASY' | 'MEDIUM' | 'HARD';
   errorsCount: number;

@@ -45,22 +45,22 @@ export const placeImValue = (
 
   const prevCorrectness = cell.isCorrect();
   const prevValue = cell.getImValue();
-  cell.setImValue(value);
+  cell.setImValue(prevValue === value ? null : value);
   const nextValue = cell.getImValue();
   const nextCorrectness = cell.isCorrect();
 
-  if (prevValue === null) {
+  if (prevValue === null && !undo) {
     dispatch(subCells());
   }
   if (nextValue === null) {
     dispatch(addCells());
   }
 
-  if (prevCorrectness && !nextCorrectness) {
+  if (prevCorrectness && !nextCorrectness && !undo) {
     dispatch(addError());
     dispatch(addCells());
+    dispatch(fine());
   } else if (!prevCorrectness && nextCorrectness) {
-    dispatch(subError());
     dispatch(subCells());
   }
 
@@ -91,9 +91,12 @@ export const getMsecs = (lastValueMsecs: number) => (dispatch: Dispatch) => {
   }, 0);
 };
 
-export const resetTimer = () => ({
-  type: ACTIONS.GAME.TIMER_RESET,
-});
+export const resetTimer = (payload: boolean) => (dispatch: Dispatch) => {
+  dispatch({
+    type: ACTIONS.GAME.TIMER_RESET,
+    payload,
+  });
+};
 
 export const addError = () => ({
   type: ACTIONS.GAME.ADD_ERROR,
@@ -121,3 +124,5 @@ export const undo = (
     dispatch(placeImValue(prevCell.i, prevCell.j, prevCell.prevValue, true));
   }
 };
+
+export const fine = () => ({ type: ACTIONS.GAME.FINE });

@@ -7,6 +7,7 @@ const INITIAL_STATE: GameState = {
   selectedColumn: null,
   timerTicks: false,
   timerValue: 0,
+  timerFine: 0,
   timerResets: false,
   currentDifficulty: 'EASY',
   errorsCount: 0,
@@ -64,11 +65,10 @@ const GameReducer = (
     case ACTIONS.GAME.TIMER_RESET:
       return {
         ...state,
-        timerResets: true,
+        timerResets: action.payload,
       };
     case ACTIONS.GAME.TIMER_GET_MSECS:
-      const isGameFinished =
-        state.cellsToResolve === 0 && state.errorsCount === 0;
+      const isGameFinished = state.cellsToResolve === 0;
       return {
         ...state,
         timerValue: action.payload,
@@ -83,6 +83,8 @@ const GameReducer = (
       return { ...state, cellsToResolve: state.cellsToResolve + 1 };
     case ACTIONS.GAME.SUB_CELLS_TO_RESOLVE:
       return { ...state, cellsToResolve: state.cellsToResolve - 1 };
+    case ACTIONS.GAME.FINE:
+      return { ...state, timerFine: state.timerFine + 3e3 };
     default:
       return state;
   }
