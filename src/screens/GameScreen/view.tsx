@@ -61,7 +61,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
 
   public componentDidUpdate() {
     if (this.props.isGameFinished) {
-      alert('Finish');
+      // alert('Finish');
     }
   }
 
@@ -73,7 +73,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   }
 
   private getTimerValue(msecs: number) {
-    if (((msecs % 60000) / 1000).toFixed(0) % 1 === 0) {
+    if (Number.parseInt(((msecs % 60000) / 1000).toFixed(0), 10) % 1 === 0) {
       this.props.getMsecs(msecs);
     }
   }
