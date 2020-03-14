@@ -37,7 +37,6 @@ export const placeImValue = (
     return;
   }
 
-  const prevCell = Object.assign({}, cell);
   const prevCorrectness = cell.isCorrect();
   const prevValue = cell.getImValue();
   cell.setImValue(value);

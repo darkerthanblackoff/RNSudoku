@@ -1,6 +1,5 @@
 import { GameState } from '../../interfaces';
 import { ACTIONS } from '../../constants';
-import { Board, BoardCell } from '../../gen';
 
 const INITIAL_STATE: GameState = {
   board: null,
@@ -37,10 +36,6 @@ const GameReducer = (
     case ACTIONS.GAME.PLACE_IM_VAL:
       const board = action.payload.board;
       const undoItem = action.payload.undoItem;
-
-      // if (prevCell.isVisible()) {
-      //   return { ...state };
-      // }
 
       if (state.undoQueue.length === 5) {
         state.undoQueue.shift();
