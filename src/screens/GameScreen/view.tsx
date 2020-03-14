@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { View, Text, Alert } from 'react-native';
-// import { Stopwatch } from 'react-native-stopwatch-timer';
+import { View, Text } from 'react-native';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
@@ -12,9 +11,11 @@ import {
   startTimer,
   getMsecs,
   stopTimer,
+  undo,
 } from '../../redux/actions';
 
 import { NumberButton, Cell, InfoBox, Stopwatch } from '../../components';
+import { Undo } from '../../assets/svg';
 import { styles } from './styles';
 
 import { BoardCell } from '../../gen';
@@ -35,13 +36,17 @@ interface GameScreenProps extends NavigationStackScreenProps {
   startTimer: () => void;
   stopTimer: () => void;
   getMsecs: (msecs: number) => void;
+  undoQueue: Array<{ i: number; j: number; prevValue: number | null }>;
+  undo: (
+    undoQueue: Array<{ i: number; j: number; prevValue: number | null }>,
+  ) => void;
 }
 
 interface GameScreenState {}
 
 class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   private topNumbers = [1, 2, 3, 4, 5];
-  private bottomNumbers = [6, 7, 8, 9, -1];
+  private bottomNumbers = [6, 7, 8, 9];
 
   public constructor(props: GameScreenProps) {
     super(props);
@@ -60,9 +65,9 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
     }
   }
 
-  private numberButtonPress(value: number) {
+  private numberButtonPress(value?: number) {
     const { selectedRow, selectedColumn } = this.props;
-    if (selectedRow !== null && selectedColumn !== null) {
+    if (selectedRow !== null && selectedColumn !== null && value) {
       this.props.placeImValue(selectedRow, selectedColumn, value);
     }
   }
@@ -145,9 +150,16 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
                   key={val}
                   style={styles.numberButtons}
                   value={val}
-                  onPress={val > 0 ? this.numberButtonPress : () => {}}
+                  onPress={this.numberButtonPress}
                 />
               ))}
+              <NumberButton
+                style={styles.numberButtons}
+                value={<Undo fill="#574251" width={28} height={28} />}
+                onPress={() => {
+                  this.props.undo(this.props.undoQueue);
+                }}
+              />
             </View>
           </View>
         </View>
@@ -165,6 +177,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       startTimer,
       getMsecs,
       stopTimer,
+      undo,
     },
     dispatch,
   );

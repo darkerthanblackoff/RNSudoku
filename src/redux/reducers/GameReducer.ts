@@ -41,14 +41,16 @@ const GameReducer = (
         state.undoQueue.shift();
       }
 
-      state.undoQueue.push(undoItem);
+      if (undoItem) {
+        state.undoQueue.push(undoItem);
+      }
 
       return {
         ...state,
         board,
       };
     case ACTIONS.GAME.UNDO_IM_VAL:
-      return { ...state };
+      return { ...state, undoQueue: action.payload };
     case ACTIONS.GAME.TIMER_START:
       return {
         ...state,

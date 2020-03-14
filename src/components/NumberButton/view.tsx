@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { styles } from './styles';
 
 export interface NumberButtonProps {
-  value: number;
-  onPress: (value: number) => void;
+  value: number | React.ReactNode;
+  onPress: (value?: number) => void;
   style?: ViewStyle;
 }
 
@@ -15,11 +15,19 @@ export const NumberButton = (props: NumberButtonProps) => {
     <View style={[styles.container, style]}>
       <TouchableOpacity
         onPress={() => {
-          onPress(value);
+          if (typeof value === 'number') {
+            onPress(value);
+          } else {
+            onPress();
+          }
         }}
         style={styles.container}>
         <View style={styles.labelContainer}>
-          <Text style={styles.label}>{value}</Text>
+          {typeof value === 'number' ? (
+            <Text style={styles.label}>{value}</Text>
+          ) : (
+            value
+          )}
         </View>
       </TouchableOpacity>
     </View>

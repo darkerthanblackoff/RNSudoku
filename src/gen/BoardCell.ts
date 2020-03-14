@@ -25,7 +25,7 @@ class BoardCell {
     this.visible = val;
   };
 
-  public setImValue = (imValue: number) => {
+  public setImValue = (imValue: number | null) => {
     return (this.imVal = imValue);
   };
 

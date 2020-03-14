@@ -28,7 +28,8 @@ export const selectCell = (i: number, j: number) => (dispatch: Dispatch) => {
 export const placeImValue = (
   selectedRow: number,
   selectedColumn: number,
-  value: number,
+  value: number | null,
+  undo?: boolean,
 ) => (dispatch: Dispatch) => {
   const board = StupidSudokuGenerator.getInstance().getBoard();
   const cell = board.getCell(selectedRow, selectedColumn);
@@ -58,7 +59,9 @@ export const placeImValue = (
     dispatch(subCells());
   }
 
-  const undoItem = { i: selectedRow, j: selectedColumn, prevValue };
+  const undoItem = undo
+    ? undefined
+    : { i: selectedRow, j: selectedColumn, prevValue };
 
   dispatch({
     type: ACTIONS.GAME.PLACE_IM_VAL,
@@ -103,6 +106,13 @@ export const subCells = () => ({
   type: ACTIONS.GAME.SUB_CELLS_TO_RESOLVE,
 });
 
-export const undo = () => ({
-  type: ACTIONS.GAME.UNDO_IM_VAL,
-});
+export const undo = (
+  undoQueue: Array<{ i: number; j: number; prevValue: number | null }>,
+) => (dispatch: Dispatch) => {
+  const prevCell = undoQueue.pop();
+
+  if (prevCell) {
+    dispatch({ type: ACTIONS.GAME.UNDO_IM_VAL, payload: undoQueue });
+    dispatch(placeImValue(prevCell.i, prevCell.j, prevCell.prevValue, true));
+  }
+};
