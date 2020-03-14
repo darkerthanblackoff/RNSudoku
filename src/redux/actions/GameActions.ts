@@ -36,3 +36,11 @@ export const getMsecs = (lastValueMsecs: number) => (dispatch: Dispatch) => {
 export const resetTimer = () => ({
   type: ACTIONS.GAME.TIMER_RESET,
 });
+
+export const addError = () => ({
+  type: ACTIONS.GAME.ADD_ERROR,
+});
+
+export const subError = () => ({
+  type: ACTIONS.GAME.SUB_ERROR,
+});

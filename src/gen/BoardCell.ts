@@ -14,7 +14,11 @@ class BoardCell {
   }
 
   public isCorrect() {
-    return this.visible ? true : this.imVal === null ? true : false;
+    return this.visible
+      ? true
+      : this.imVal === null
+      ? true
+      : this.imVal === this.reVal;
   }
 
   public setVisability(val: boolean) {

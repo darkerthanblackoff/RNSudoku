@@ -27,9 +27,8 @@ interface GameScreenProps extends NavigationStackScreenProps {
   timerValue: number;
   timerResets: boolean;
   currentDifficulty: string;
-  init: () => void;
+  errorsCount: number;
   selectCell: (i: number, j: number) => void;
-  updateBoard: () => void;
   placeImValue: (val: number) => void;
   startTimer: () => void;
   stopTimer: () => void;
@@ -73,6 +72,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
       timerTicks,
       timerValue,
       currentDifficulty,
+      errorsCount,
     } = this.props;
 
     return (
@@ -84,7 +84,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
         <View style={styles.contentContainer}>
           <View style={styles.boardContainer}>
             <View style={styles.topBarContainer}>
-              <InfoBox label="Errors Count: 0" />
+              <InfoBox label={`Erros: ${errorsCount}`} />
               <Stopwatch
                 start={timerTicks}
                 startTime={timerValue}

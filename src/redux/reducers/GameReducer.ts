@@ -9,6 +9,8 @@ const INITIAL_STATE: GameState = {
   timerTicks: false,
   timerValue: 0,
   timerResets: false,
+  currentDifficulty: 'EASY',
+  errorsCount: 0,
 };
 
 const GameReducer = (
@@ -33,15 +35,26 @@ const GameReducer = (
         selectedColumn: action.payload.j,
       };
     case ACTIONS.GAME.PLACE_IM_VAL:
-      const b = new Board(state.board!);
+      const board = new Board(state.board!);
+      const cell = board.getCell(state.selectedRow!, state.selectedColumn!);
+      const prevCorrectnes = cell.isCorrect();
+      cell.setImValue(action.payload);
+      const nextCorrectnes = cell.isCorrect();
 
-      b.getCell(state.selectedRow!, state.selectedColumn!).setImValue(
-        action.payload,
-      );
+      let { errorsCount } = state;
+      let errors = errorsCount;
+      if (prevCorrectnes) {
+        errors = nextCorrectnes ? errors : errors + 1;
+      } else {
+        errors = nextCorrectnes ? errors - 1 : errors;
+      }
+
+      console.log(errors);
 
       return {
         ...state,
-        board: b.toArray(),
+        board: board.toArray(),
+        errorsCount: errors,
       };
     case ACTIONS.GAME.TIMER_START:
       return {
@@ -63,6 +76,8 @@ const GameReducer = (
         ...state,
         timerValue: action.payload,
       };
+    case ACTIONS.GAME.ADD_ERROR:
+      return { ...state, errorsCount: state.errorsCount + 1 };
     default:
       return state;
   }

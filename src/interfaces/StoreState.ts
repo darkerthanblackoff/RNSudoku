@@ -9,6 +9,7 @@ export interface GameState {
   timerValue: number;
   timerResets: boolean;
   currentDifficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  errorsCount: number;
 }
 
 export interface SettingsState {
