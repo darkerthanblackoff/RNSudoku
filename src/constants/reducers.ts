@@ -1,4 +1,5 @@
 export enum REDUCERS {
   SETTINGS = 'SETTINGS',
   GAME = 'GAME',
+  LEADER_BOARD = 'LEADER_BOARD',
 }

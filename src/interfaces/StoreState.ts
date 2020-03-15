@@ -1,5 +1,6 @@
 import { REDUCERS } from '../constants';
 import { BoardCell } from '../gen';
+import { LeaderRecord } from './LeaderRecord';
 
 export interface GameState {
   board: Array<Array<BoardCell>> | null;
@@ -22,7 +23,12 @@ export interface SettingsState {
   name: string;
 }
 
+export interface LeaderboardState {
+  leaders: Array<LeaderRecord>;
+}
+
 export interface StoreState {
   [REDUCERS.GAME]: GameState;
   [REDUCERS.SETTINGS]: SettingsState;
+  [REDUCERS.LEADER_BOARD]: LeaderboardState;
 }

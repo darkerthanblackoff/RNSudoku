@@ -10,7 +10,8 @@ import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { StoreState } from '../../interfaces';
-import { createNewGame } from '../../redux/actions';
+import { createNewGame, addLeaderboardRecord } from '../../redux/actions';
+import { LeaderRecord } from '../../interfaces/LeaderRecord';
 import { formatTimeString } from '../../utils/time';
 
 import { styles } from './styles';
@@ -23,10 +24,39 @@ export interface FinishScreenProps extends NavigationStackScreenProps {
   timerFine: number;
   timerValue: number;
   currentGamePlayer: string;
+  leaders: Array<LeaderRecord>;
   createNewGame: (diff: Difficulty, name: string) => void;
+  addLeaderboardRecord: (
+    leaders: Array<LeaderRecord>,
+    record: LeaderRecord,
+  ) => void;
 }
 
 class FinishScreen extends PureComponent<FinishScreenProps> {
+  public componentDidMount() {
+    const {
+      currentDifficulty,
+      errorsCount,
+      timerFine,
+      timerValue,
+      currentGamePlayer,
+    } = this.props;
+    const fineTime = formatTimeString(timerFine + '');
+    const spentTime = formatTimeString(timerValue + '');
+    const totalTime = formatTimeString(timerValue + timerFine + '');
+
+    const record: LeaderRecord = {
+      name: currentGamePlayer,
+      difficulty: currentDifficulty,
+      errorsCount,
+      fineTime,
+      spentTime,
+      totalTime,
+    };
+
+    this.props.addLeaderboardRecord(this.props.leaders, record);
+  }
+
   private handleStart = () => {
     const { navigation, currentDifficulty, currentGamePlayer } = this.props;
 
@@ -102,9 +132,12 @@ class FinishScreen extends PureComponent<FinishScreenProps> {
   }
 }
 
-const mapStateToProps = (STORE: StoreState) => ({ ...STORE.GAME });
+const mapStateToProps = (STORE: StoreState) => {
+  const { GAME, LEADER_BOARD } = STORE;
+  return { ...GAME, ...LEADER_BOARD };
+};
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({ createNewGame }, dispatch);
+  bindActionCreators({ createNewGame, addLeaderboardRecord }, dispatch);
 
 export default connect(
   mapStateToProps,

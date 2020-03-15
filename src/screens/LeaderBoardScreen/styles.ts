@@ -7,6 +7,7 @@ export interface LeaderBoardScreenStyle {
   listContainer: ViewStyle;
   list: ViewStyle;
   listItem: ViewStyle;
+  listText: TextStyle;
 }
 
 export const styles = StyleSheet.create<LeaderBoardScreenStyle>({
@@ -16,8 +17,13 @@ export const styles = StyleSheet.create<LeaderBoardScreenStyle>({
     justifyContent: 'center',
   },
   label: {
-    flex: 2,
+    flex: 1,
     width: '100%',
+    fontSize: rem(30),
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   listContainer: {
     flex: 5,
@@ -26,6 +32,13 @@ export const styles = StyleSheet.create<LeaderBoardScreenStyle>({
   list: {},
   listItem: {
     height: rem(50),
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  listText: {
+    fontSize: rem(15),
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#FFFFFF',
   },
 });
