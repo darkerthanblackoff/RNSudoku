@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { StoreState } from '../../interfaces';
 import { setDifficulty, createNewGame, setName } from '../../redux/actions';
 
-import { ROUTES, DIFFICULTY } from '../../constants';
+import { ROUTES, DIFFICULTY, COLORS as colors } from '../../constants';
 
 import { KeyboardDismissView, MenuButton } from '../../components';
 import { Play, Options, LeaderBoard } from '../../assets/svg';
@@ -72,7 +72,9 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
     this.props.navigation.navigate(ROUTES.GAME);
   };
 
-  private handleLeaderboard = () => {};
+  private handleLeaderboard = () => {
+    this.props.navigation.navigate(ROUTES.LEADER_BOARD);
+  };
 
   public render() {
     const { difficulty, name, canResume } = this.props;
@@ -81,7 +83,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
       <KeyboardDismissView>
         <LinearGradient
           style={styles.container}
-          colors={['#6A4D6B', '#9E5D75']}>
+          colors={[colors.top, colors.bottom]}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>SUDOKU</Text>
           </View>
@@ -96,7 +98,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             />
             <SwitchSelector
               style={{ ...styles.switch, ...styles.buttonSpacing }}
-              buttonColor="#7953CF"
+              buttonColor={colors.difficulty}
               options={switchOptions}
               initial={0}
               value={mapDifficultyToNum(difficulty)}
@@ -106,24 +108,26 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
               style={styles.buttonSpacing}
               label="Start Game"
               onPress={this.handleStart}
-              color="#EC4F64"
-              icon={<Play fill="#FFF" height={28} width={28} />}
+              color={colors.start}
+              icon={<Play fill={colors.menuIcon} height={28} width={28} />}
             />
             {canResume && (
               <MenuButton
                 style={styles.buttonSpacing}
                 label="Resume Game"
                 onPress={this.handleResume}
-                color="#F4C956"
-                icon={<Options fill="#FFF" height={28} width={28} />}
+                color={colors.resume}
+                icon={<Options fill={colors.menuIcon} height={28} width={28} />}
               />
             )}
             <MenuButton
               style={styles.buttonSpacing}
               label="Leaderboard"
               onPress={this.handleLeaderboard}
-              color="#30AEEB"
-              icon={<LeaderBoard fill="#FFF" height={28} width={28} />}
+              color={colors.leaderBoard}
+              icon={
+                <LeaderBoard fill={colors.menuIcon} height={28} width={28} />
+              }
             />
           </View>
         </LinearGradient>
