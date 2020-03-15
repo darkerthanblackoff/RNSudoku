@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 
 import { View, Text } from 'react-native';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
+import { ROUTES } from '../../constants';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { StoreState } from '../../interfaces';
@@ -15,7 +16,7 @@ import {
 } from '../../redux/actions';
 
 import { NumberButton, Cell, InfoBox, Stopwatch } from '../../components';
-import { Undo } from '../../assets/svg';
+import { Undo, Pause } from '../../assets/svg';
 import { styles } from './styles';
 
 import { BoardCell } from '../../gen';
@@ -48,35 +49,36 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
   private topNumbers = [1, 2, 3, 4, 5];
   private bottomNumbers = [6, 7, 8, 9];
 
-  public constructor(props: GameScreenProps) {
-    super(props);
-
-    this.numberButtonPress = this.numberButtonPress.bind(this);
-    this.getTimerValue = this.getTimerValue.bind(this);
-  }
-
   public componentDidMount() {
     this.props.startTimer();
   }
 
   public componentDidUpdate() {
     if (this.props.isGameFinished) {
-      // alert('Finish');
+      this.props.navigation.navigate(ROUTES.FINISH_SCREEN);
     }
   }
 
-  private numberButtonPress(value?: number) {
+  private numberButtonPress = (value?: number) => {
     const { selectedRow, selectedColumn } = this.props;
     if (selectedRow !== null && selectedColumn !== null && value) {
       this.props.placeImValue(selectedRow, selectedColumn, value);
     }
-  }
+  };
 
-  private getTimerValue(msecs: number) {
+  private getTimerValue = (msecs: number) => {
     if (Number.parseInt(((msecs % 60000) / 1000).toFixed(0), 10) % 1 === 0) {
       this.props.getMsecs(msecs);
     }
-  }
+  };
+
+  private handlePause = () => {
+    this.props.navigation.goBack();
+  };
+
+  private handleUndo = () => {
+    this.props.undo(this.props.undoQueue);
+  };
 
   public render() {
     const {
@@ -143,6 +145,11 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
                   onPress={this.numberButtonPress}
                 />
               ))}
+              <NumberButton
+                style={styles.numberButtons}
+                value={<Pause fill="#574251" width={28} height={28} />}
+                onPress={this.handlePause}
+              />
             </View>
             <View style={styles.numberButtonsRow}>
               {this.bottomNumbers.map(val => (
@@ -156,9 +163,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
               <NumberButton
                 style={styles.numberButtons}
                 value={<Undo fill="#574251" width={28} height={28} />}
-                onPress={() => {
-                  this.props.undo(this.props.undoQueue);
-                }}
+                onPress={this.handleUndo}
               />
             </View>
           </View>
