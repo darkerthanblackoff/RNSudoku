@@ -103,7 +103,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
                 start={timerTicks}
                 startTime={timerValue}
                 textStyle={styles.stopwatchText}
-                laps
+                getMsecs={this.getTimerValue}
               />
               <Text style={styles.difficultyText}>{currentDifficulty}</Text>
             </View>
