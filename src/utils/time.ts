@@ -1,4 +1,4 @@
-function formatTimeString(time: string, showMsecs: boolean) {
+function formatTimeString(time: string, showMsecs?: boolean) {
   const intTime = Number.parseInt(time, 10);
   let msecs = '' + (intTime % 1000);
 

@@ -73,7 +73,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
   };
 
   private handleLeaderboard = () => {
-    this.props.navigation.navigate(ROUTES.LEADER_BOARD);
+    this.props.navigation.navigate(ROUTES.FINISH_SCREEN);
   };
 
   public render() {
