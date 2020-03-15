@@ -39,7 +39,12 @@ class FinishScreen extends PureComponent<FinishScreenProps> {
   };
 
   public render() {
-    const { timerValue, timerFine, errorsCount } = this.props;
+    const {
+      timerValue,
+      timerFine,
+      errorsCount,
+      currentDifficulty,
+    } = this.props;
 
     return (
       <LinearGradient
@@ -49,6 +54,10 @@ class FinishScreen extends PureComponent<FinishScreenProps> {
         <View style={styles.resultBoard}>
           <Text style={styles.resultText}>RESULT</Text>
           <View style={styles.resultSeparator} />
+          <View style={styles.resultRow}>
+            <Text style={styles.resultRowText}>Difficulty: </Text>
+            <Text style={styles.resultRowText}>{currentDifficulty}</Text>
+          </View>
           <View style={styles.resultRow}>
             <Text style={styles.resultRowText}>Time spent: </Text>
             <Text style={styles.resultRowText}>

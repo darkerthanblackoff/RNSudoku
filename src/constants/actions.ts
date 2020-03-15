@@ -2,6 +2,7 @@ import { REDUCERS } from './reducers';
 
 export enum GAME_ACTIONS {
   NEW = 'NEW',
+  END = 'END',
 
   SELECT_CELL = 'SELECT_CELL',
   PLACE_IM_VAL = 'PLACE_IM_VAL',

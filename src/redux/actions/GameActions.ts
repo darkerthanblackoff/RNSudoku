@@ -21,6 +21,10 @@ export const createNewGame = (
   };
 };
 
+export const endCurrentGame = () => ({
+  type: ACTIONS.GAME.END,
+});
+
 export const selectCell = (i: number, j: number) => (dispatch: Dispatch) => {
   setTimeout(() => {
     dispatch({

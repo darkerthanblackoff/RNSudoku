@@ -29,6 +29,13 @@ const GameReducer = (
         errorsCount: 0,
         ...action.payload,
       };
+    case ACTIONS.GAME.END:
+      return {
+        ...state,
+        timerValue: 0,
+        errorsCount: 0,
+        board: null,
+      };
     case ACTIONS.GAME.SELECT_CELL:
       return {
         ...state,
