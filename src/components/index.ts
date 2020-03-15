@@ -3,3 +3,4 @@ export { NumberButton } from './NumberButton';
 export { Cell } from './Cell';
 export { InfoBox } from './InfoBox';
 export { Stopwatch } from './Stopwatch';
+export { KeyboardDismissView } from './KeyboardDismissView';

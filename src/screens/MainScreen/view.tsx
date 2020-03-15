@@ -14,7 +14,7 @@ import { setDifficulty, createNewGame, setName } from '../../redux/actions';
 
 import { ROUTES, DIFFICULTY } from '../../constants';
 
-import { MenuButton } from '../../components';
+import { KeyboardDismissView, MenuButton } from '../../components';
 import { Play, Options, LeaderBoard } from '../../assets/svg';
 import { styles } from './styles';
 
@@ -61,57 +61,61 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
     const { navigation, difficulty, name, canResume } = this.props;
 
     return (
-      <LinearGradient style={styles.container} colors={['#6A4D6B', '#9E5D75']}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>SUDOKU</Text>
-        </View>
-        <View style={styles.buttonsContainer}>
-          <TextInput
-            style={{ ...styles.nameInput, ...styles.buttonSpacing }}
-            value={name}
-            onChangeText={this.props.setName}
-            placeholder="Enter your name..."
-            clearButtonMode="always"
-            returnKeyType="done"
-          />
-          <SwitchSelector
-            style={{ ...styles.switch, ...styles.buttonSpacing }}
-            buttonColor="#7953CF"
-            options={switchOptions}
-            initial={0}
-            value={mapDifficultyToNum(difficulty)}
-            onPress={this.props.setDifficulty}
-          />
-          <MenuButton
-            style={styles.buttonSpacing}
-            label="Start Game"
-            onPress={() => {
-              this.props.createNewGame(difficulty, name);
-              navigation.navigate(ROUTES.GAME);
-            }}
-            color="#EC4F64"
-            icon={<Play fill="#FFF" height={28} width={28} />}
-          />
-          {canResume && (
+      <KeyboardDismissView>
+        <LinearGradient
+          style={styles.container}
+          colors={['#6A4D6B', '#9E5D75']}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>SUDOKU</Text>
+          </View>
+          <View style={styles.buttonsContainer}>
+            <TextInput
+              style={{ ...styles.nameInput, ...styles.buttonSpacing }}
+              value={name}
+              onChangeText={this.props.setName}
+              placeholder="Enter your name..."
+              clearButtonMode="always"
+              returnKeyType="done"
+            />
+            <SwitchSelector
+              style={{ ...styles.switch, ...styles.buttonSpacing }}
+              buttonColor="#7953CF"
+              options={switchOptions}
+              initial={0}
+              value={mapDifficultyToNum(difficulty)}
+              onPress={this.props.setDifficulty}
+            />
             <MenuButton
               style={styles.buttonSpacing}
-              label="Resume Game"
+              label="Start Game"
               onPress={() => {
+                this.props.createNewGame(difficulty, name);
                 navigation.navigate(ROUTES.GAME);
               }}
-              color="#F4C956"
-              icon={<Options fill="#FFF" height={28} width={28} />}
+              color="#EC4F64"
+              icon={<Play fill="#FFF" height={28} width={28} />}
             />
-          )}
-          <MenuButton
-            style={styles.buttonSpacing}
-            label="Leaderboard"
-            onPress={() => {}}
-            color="#30AEEB"
-            icon={<LeaderBoard fill="#FFF" height={28} width={28} />}
-          />
-        </View>
-      </LinearGradient>
+            {canResume && (
+              <MenuButton
+                style={styles.buttonSpacing}
+                label="Resume Game"
+                onPress={() => {
+                  navigation.navigate(ROUTES.GAME);
+                }}
+                color="#F4C956"
+                icon={<Options fill="#FFF" height={28} width={28} />}
+              />
+            )}
+            <MenuButton
+              style={styles.buttonSpacing}
+              label="Leaderboard"
+              onPress={() => {}}
+              color="#30AEEB"
+              icon={<LeaderBoard fill="#FFF" height={28} width={28} />}
+            />
+          </View>
+        </LinearGradient>
+      </KeyboardDismissView>
     );
   }
 }
