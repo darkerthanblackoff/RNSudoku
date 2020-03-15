@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Alert } from 'react-native';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 import LinearGradient from 'react-native-linear-gradient';
 import SwitchSelector, {
@@ -57,8 +57,25 @@ const mapDifficultyToNum = (difficulty: Difficulty): number => {
 };
 
 class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
+  private handleStart = () => {
+    const { navigation, difficulty, name } = this.props;
+
+    if (name.trim().length) {
+      this.props.createNewGame(difficulty, name);
+      navigation.navigate(ROUTES.GAME);
+    } else {
+      Alert.alert("You need to enter you're to start new game");
+    }
+  };
+
+  private handleResume = () => {
+    this.props.navigation.navigate(ROUTES.GAME);
+  };
+
+  private handleLeaderboard = () => {};
+
   public render() {
-    const { navigation, difficulty, name, canResume } = this.props;
+    const { difficulty, name, canResume } = this.props;
 
     return (
       <KeyboardDismissView>
@@ -88,10 +105,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             <MenuButton
               style={styles.buttonSpacing}
               label="Start Game"
-              onPress={() => {
-                this.props.createNewGame(difficulty, name);
-                navigation.navigate(ROUTES.GAME);
-              }}
+              onPress={this.handleStart}
               color="#EC4F64"
               icon={<Play fill="#FFF" height={28} width={28} />}
             />
@@ -99,9 +113,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
               <MenuButton
                 style={styles.buttonSpacing}
                 label="Resume Game"
-                onPress={() => {
-                  navigation.navigate(ROUTES.GAME);
-                }}
+                onPress={this.handleResume}
                 color="#F4C956"
                 icon={<Options fill="#FFF" height={28} width={28} />}
               />
@@ -109,7 +121,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
             <MenuButton
               style={styles.buttonSpacing}
               label="Leaderboard"
-              onPress={() => {}}
+              onPress={this.handleLeaderboard}
               color="#30AEEB"
               icon={<LeaderBoard fill="#FFF" height={28} width={28} />}
             />
