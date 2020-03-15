@@ -62,19 +62,17 @@ class FinishScreen extends PureComponent<FinishScreenProps> {
     this.props.addLeaderboardRecord(this.props.leaders, record);
   }
 
-  public componentWillUnmount() {
-    this.props.endCurrentGame();
-  }
-
   private handleStart = () => {
     const { navigation, currentDifficulty, currentGamePlayer } = this.props;
 
+    this.props.endCurrentGame();
     this.props.createNewGame(currentDifficulty, currentGamePlayer);
     navigation.navigate(ROUTES.GAME);
   };
 
   private handleLeaderboard = () => {
     this.props.navigation.navigate(ROUTES.LEADER_BOARD);
+    this.props.endCurrentGame();
   };
 
   public render() {

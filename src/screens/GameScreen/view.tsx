@@ -115,7 +115,7 @@ class GameScreen extends PureComponent<GameScreenProps, GameScreenState> {
                   <View key={`${rIndex}`} style={styles.boardRow}>
                     {row.map((el, cIndex) => (
                       <Cell
-                        key={`${rIndex}:${cIndex}:${el.getReValue()}`}
+                        key={`${rIndex}:${cIndex}`}
                         label={
                           el.isVisible() ? el.getReValue() : el.getImValue()
                         }

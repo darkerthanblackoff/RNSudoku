@@ -7,14 +7,20 @@ import LinearGradient from 'react-native-linear-gradient';
 import { LeaderRecord } from '../../interfaces/LeaderRecord';
 import { StoreState } from '../../interfaces';
 import { styles } from './styles';
-import { COLORS as colors } from '../../constants';
+import { ROUTES, COLORS as colors } from '../../constants';
 import { connect } from 'react-redux';
+
+import { MenuButton } from '../../components';
 
 interface LeaderBoardScreenProps extends NavigationStackScreenProps {
   leaders: LeaderRecord[];
 }
 
 class LeaderBoardScreen extends PureComponent<LeaderBoardScreenProps> {
+  private handleMain = () => {
+    this.props.navigation.navigate(ROUTES.MAIN);
+  };
+
   public render() {
     const { leaders } = this.props;
 
@@ -44,6 +50,12 @@ class LeaderBoardScreen extends PureComponent<LeaderBoardScreenProps> {
             <Text style={styles.listText}>There is nothing to show :(</Text>
           )}
         </View>
+        <MenuButton
+          style={{ marginBottom: 20 }}
+          label="Go to Main Menu"
+          onPress={this.handleMain}
+          color={colors.leaderBoard}
+        />
       </LinearGradient>
     );
   }

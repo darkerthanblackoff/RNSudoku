@@ -3,9 +3,21 @@ class BoardCell {
   private imVal: number | null;
   private visible: boolean;
 
-  public constructor(value: number, visible: boolean = true) {
+  public static from(obj: {
+    reVal: number;
+    imVal: number | null;
+    visible: boolean;
+  }) {
+    return new BoardCell(obj.reVal, obj.visible, obj.imVal);
+  }
+
+  public constructor(
+    value: number,
+    visible: boolean = true,
+    imVal?: number | null,
+  ) {
     this.reVal = value;
-    this.imVal = null;
+    this.imVal = imVal ? imVal : null;
     this.visible = visible;
   }
 
@@ -27,6 +39,10 @@ class BoardCell {
 
   public setImValue = (imValue: number | null) => {
     return (this.imVal = imValue);
+  };
+
+  private setReValue = (value: number) => {
+    this.reVal = value;
   };
 
   public getReValue = () => {
