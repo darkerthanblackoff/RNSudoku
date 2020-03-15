@@ -10,7 +10,11 @@ import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { StoreState } from '../../interfaces';
-import { createNewGame, addLeaderboardRecord } from '../../redux/actions';
+import {
+  createNewGame,
+  addLeaderboardRecord,
+  endCurrentGame,
+} from '../../redux/actions';
 import { LeaderRecord } from '../../interfaces/LeaderRecord';
 import { formatTimeString } from '../../utils/time';
 
@@ -26,6 +30,7 @@ export interface FinishScreenProps extends NavigationStackScreenProps {
   currentGamePlayer: string;
   leaders: Array<LeaderRecord>;
   createNewGame: (diff: Difficulty, name: string) => void;
+  endCurrentGame: () => void;
   addLeaderboardRecord: (
     leaders: Array<LeaderRecord>,
     record: LeaderRecord,
@@ -55,6 +60,10 @@ class FinishScreen extends PureComponent<FinishScreenProps> {
     };
 
     this.props.addLeaderboardRecord(this.props.leaders, record);
+  }
+
+  public componentWillUnmount() {
+    this.props.endCurrentGame();
   }
 
   private handleStart = () => {
@@ -137,7 +146,10 @@ const mapStateToProps = (STORE: StoreState) => {
   return { ...GAME, ...LEADER_BOARD };
 };
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({ createNewGame, addLeaderboardRecord }, dispatch);
+  bindActionCreators(
+    { createNewGame, addLeaderboardRecord, endCurrentGame },
+    dispatch,
+  );
 
 export default connect(
   mapStateToProps,

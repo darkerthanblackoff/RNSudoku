@@ -29,9 +29,9 @@ class BoardCell {
     return (this.imVal = imValue);
   };
 
-  public getReValue() {
+  public getReValue = () => {
     return this.reVal;
-  }
+  };
 
   public getImValue = () => {
     return this.imVal;

@@ -27,6 +27,10 @@ const GameReducer = (
         ...state,
         timerValue: 0,
         errorsCount: 0,
+        timerFine: 0,
+        isGameFinished: false,
+        selectedRow: 0,
+        selectedColumn: 0,
         ...action.payload,
       };
     case ACTIONS.GAME.END:
@@ -34,6 +38,10 @@ const GameReducer = (
         ...state,
         timerValue: 0,
         errorsCount: 0,
+        timerFine: 0,
+        isGameFinished: false,
+        selectedRow: 0,
+        selectedColumn: 0,
         board: null,
       };
     case ACTIONS.GAME.SELECT_CELL:
