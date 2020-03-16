@@ -10,13 +10,16 @@ import {
 import logger from 'redux-logger';
 import reducers from '../reducers';
 import { REDUCERS } from '../../constants';
-import { GameState } from '../../interfaces/StoreState';
+import { StoreState, GameState } from '../../interfaces/StoreState';
 import { BoardCell } from '../../gen';
 
 const BoardCellsTransform = createTransform<void, GameState, any, GameState>(
   null,
-  (outboundState, key): GameState => {
-    const board = outboundState.board?.map((row) => row.map((cell) => BoardCell.from(cell)))
+  (outboundState): GameState => {
+    const board = outboundState.board
+      ? outboundState.board.map(row => row.map(cell => BoardCell.from(cell)))
+      : null;
+
     return { ...outboundState, board };
   },
   {
@@ -24,7 +27,7 @@ const BoardCellsTransform = createTransform<void, GameState, any, GameState>(
   },
 );
 
-const persistConfig: PersistConfig = {
+const persistConfig: PersistConfig<StoreState> = {
   key: 'root',
   storage: AsyncStorage,
   whitelist: [REDUCERS.GAME, REDUCERS.LEADER_BOARD, REDUCERS.SETTINGS],

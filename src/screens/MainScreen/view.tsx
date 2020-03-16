@@ -57,6 +57,12 @@ const mapDifficultyToNum = (difficulty: Difficulty): number => {
 };
 
 class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
+  public constructor(props: MainScreenProps) {
+    super(props);
+
+    this.props.setDifficulty('EASY');
+  }
+
   private handleStart = () => {
     const { navigation, difficulty, name } = this.props;
 
@@ -138,7 +144,10 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
 
 const mapStateToProps = (STORE: StoreState) => {
   const { GAME, SETTINGS } = STORE;
-  return { ...SETTINGS, canResume: GAME.board !== null };
+  return {
+    ...SETTINGS,
+    canResume: GAME.board !== null && !GAME.isGameFinished,
+  };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
