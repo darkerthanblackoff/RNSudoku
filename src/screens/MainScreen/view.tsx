@@ -24,6 +24,7 @@ interface MainScreenProps extends NavigationStackScreenProps {
   difficulty: Difficulty;
   name: string;
   canResume: boolean;
+  prevGameEnded?: boolean;
   setDifficulty: (diff: Difficulty) => void;
   setName: (value: string) => void;
   createNewGame: (diff: Difficulty, name: string) => void;
@@ -66,11 +67,28 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
   private handleStart = () => {
     const { navigation, difficulty, name } = this.props;
 
-    if (name.trim().length) {
+    if (!name.trim().length) {
+      Alert.alert("You need to enter you're to start new game");
+    }
+
+    if (this.props.prevGameEnded) {
       this.props.createNewGame(difficulty, name);
       navigation.navigate(ROUTES.GAME);
     } else {
-      Alert.alert("You need to enter you're to start new game");
+      Alert.alert(
+        'Your will lost your progress',
+        'Your saved progress of previous game will be lost. Are you sure you want to continue?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'New game',
+            onPress: () => {
+              this.props.createNewGame(difficulty, name);
+              navigation.navigate(ROUTES.GAME);
+            },
+          },
+        ],
+      );
     }
   };
 
@@ -147,6 +165,7 @@ const mapStateToProps = (STORE: StoreState) => {
   return {
     ...SETTINGS,
     canResume: GAME.board !== null && !GAME.isGameFinished,
+    prevGameEnded: !GAME.board,
   };
 };
 
