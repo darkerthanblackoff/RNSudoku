@@ -34,6 +34,7 @@ class LeaderBoardScreen extends PureComponent<LeaderBoardScreenProps> {
             <FlatList
               style={styles.list}
               data={leaders}
+              keyExtractor={item => JSON.stringify(item)}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
                 <View style={styles.listItem}>
