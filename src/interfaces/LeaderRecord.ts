@@ -5,4 +5,5 @@ export interface LeaderRecord {
   spentTime: string;
   fineTime: string;
   totalTime: string;
+  date: number;
 }
