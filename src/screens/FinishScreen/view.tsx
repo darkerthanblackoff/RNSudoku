@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, BackHandler } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import { Play, LeaderBoard } from '../../assets/svg';
@@ -34,6 +34,8 @@ export interface FinishScreenProps extends NavigationStackScreenProps {
 
 class FinishScreen extends PureComponent<FinishScreenProps> {
   public componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+
     const {
       currentDifficulty,
       errorsCount,
@@ -57,6 +59,10 @@ class FinishScreen extends PureComponent<FinishScreenProps> {
     this.props.addLeaderboardRecord(this.props.leaders, record);
   }
 
+  public componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
   private handleStart = () => {
     const { navigation, currentDifficulty, currentGamePlayer } = this.props;
 
@@ -66,6 +72,10 @@ class FinishScreen extends PureComponent<FinishScreenProps> {
 
   private handleLeaderboard = () => {
     this.props.navigation.navigate(ROUTES.LEADER_BOARD);
+  };
+
+  private handleBackPress = () => {
+    return true;
   };
 
   public render() {
