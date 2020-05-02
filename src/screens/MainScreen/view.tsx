@@ -68,13 +68,10 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
     const { navigation, difficulty, name } = this.props;
 
     if (!name.trim().length) {
-      Alert.alert("You need to enter you're to start new game");
+      Alert.alert("You need to enter you're name to start new game");
     }
 
-    if (this.props.prevGameEnded) {
-      this.props.createNewGame(difficulty, name);
-      navigation.navigate(ROUTES.GAME);
-    } else {
+    if (this.props.canResume) {
       Alert.alert(
         'Your will lost your progress',
         'Your saved progress of previous game will be lost. Are you sure you want to continue?',
@@ -89,6 +86,9 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
           },
         ],
       );
+    } else {
+      this.props.createNewGame(difficulty, name);
+      navigation.navigate(ROUTES.GAME);
     }
   };
 
