@@ -110,6 +110,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
           colors={[colors.top, colors.bottom]}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>SUDOKU</Text>
+            {global.HermesInternal ? <Text>Powered by Hermes</Text> : undefined}
           </View>
           <View style={styles.buttonsContainer}>
             <TextInput
