@@ -21,6 +21,25 @@ class LeaderBoardScreen extends PureComponent<LeaderBoardScreenProps> {
     this.props.navigation.navigate(ROUTES.MAIN);
   };
 
+  private _renderRecord = (item: LeaderRecord) => (
+    <View style={styles.listItem}>
+      <View>
+        <Text style={styles.listText}>
+          {new Date(item.date).toLocaleDateString()}
+        </Text>
+        <Text style={styles.listText}>
+          {new Date(item.date).toLocaleTimeString()}
+        </Text>
+      </View>
+      <Text style={styles.listText}>{item.name}</Text>
+      <View>
+        <Text style={styles.listText}>{`${item.difficulty} ${
+          item.errorsCount
+        } ${item.totalTime}`}</Text>
+      </View>
+    </View>
+  );
+
   public render() {
     const { leaders } = this.props;
 
@@ -30,22 +49,16 @@ class LeaderBoardScreen extends PureComponent<LeaderBoardScreenProps> {
         colors={[colors.top, colors.bottom]}>
         <Text style={styles.label}>Leaderboard</Text>
         <View style={styles.listContainer}>
+          <Text style={[styles.listText, styles.listHText]}>
+            DateTime | Player name | Difficulty | Errors count | Time
+          </Text>
           {leaders.length > 0 ? (
             <FlatList
               style={styles.list}
               data={leaders}
               keyExtractor={item => JSON.stringify(item)}
               showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <View style={styles.listItem}>
-                  <Text style={styles.listText}>{item.name}</Text>
-                  <View>
-                    <Text style={styles.listText}>{`${item.difficulty} ${
-                      item.errorsCount
-                    } ${item.totalTime}`}</Text>
-                  </View>
-                </View>
-              )}
+              renderItem={({ item }) => this._renderRecord(item)}
             />
           ) : (
             <Text style={styles.listText}>There is nothing to show :(</Text>

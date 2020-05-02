@@ -7,6 +7,7 @@ export interface LeaderBoardScreenStyle {
   listContainer: ViewStyle;
   list: ViewStyle;
   listItem: ViewStyle;
+  listHText: TextStyle;
   listText: TextStyle;
 }
 
@@ -27,7 +28,8 @@ export const styles = StyleSheet.create<LeaderBoardScreenStyle>({
   },
   listContainer: {
     flex: 5,
-    width: '70%',
+    width: '90%',
+    justifyContent: 'center',
   },
   list: {},
   listItem: {
@@ -35,6 +37,7 @@ export const styles = StyleSheet.create<LeaderBoardScreenStyle>({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  listHText: { fontSize: rem(13), marginBottom: 10 },
   listText: {
     fontSize: rem(15),
     fontWeight: 'bold',

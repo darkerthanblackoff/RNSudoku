@@ -54,7 +54,7 @@ class FinishScreen extends PureComponent<FinishScreenProps> {
       fineTime,
       spentTime,
       totalTime,
-      date: Math.round(new Date().getTime() / 1000),
+      date: Math.round(new Date().getTime()),
     };
 
     this.props.addLeaderboardRecord(this.props.leaders, record);
