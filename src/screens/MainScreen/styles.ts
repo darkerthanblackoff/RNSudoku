@@ -9,6 +9,7 @@ export interface MainSceenStyle {
   buttonSpacing: ViewStyle;
   switch: ViewStyle;
   nameInput: ViewStyle;
+  hermesTitle: TextStyle;
 }
 
 export const styles = StyleSheet.create<MainSceenStyle>({
@@ -42,5 +43,8 @@ export const styles = StyleSheet.create<MainSceenStyle>({
     height: rem(50),
     backgroundColor: '#FFF',
     borderRadius: rem(10),
+  },
+  hermesTitle: {
+    color: '#FFFFFF',
   },
 });
