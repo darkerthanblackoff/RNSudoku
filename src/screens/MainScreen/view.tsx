@@ -69,6 +69,7 @@ class MainScreen extends PureComponent<MainScreenProps, MainScreenState> {
 
     if (!name.trim().length) {
       Alert.alert("You need to enter you're name to start new game");
+      return;
     }
 
     if (this.props.canResume) {
